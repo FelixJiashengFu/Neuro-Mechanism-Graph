@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="α-突触核蛋白病理传播的四段拆解：构象模板化扩增、细胞间转移的四条路径、Braak 分期假说及其反例。实线画已验证生物学，虚线画待检验假设，术语附中英对照。">
+<title>α-syn 传播机制图解｜模板化 · 细胞间转移 · 分期假说</title>
+<style>
+:root{
+  --paper:#f6f8fa;
+  --surface:#ffffff;
+  --surface-2:#eef2f6;
+  --ink:#161b22;
+  --ink-soft:#5b6673;
+  --rule:#d6dce4;
+  --known:#0f6b70;        /* 已验证的通用生物学 */
+  --known-wash:#e2f0f0;
+  --hypo:#8f5300;         /* 待检验的假设 */
+  --hypo-wash:#faecd8;
+  --patho:#962b64;        /* 病理物种 / 失效分支 */
+  --patho-wash:#f8e5ee;
+  --display:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Times New Roman",Georgia,serif;
+  --body:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --term:ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+.backnav{font-family:var(--term);font-size:11px;letter-spacing:.1em;margin-bottom:20px}
+.backnav a{color:var(--ink-soft);text-decoration:none}
+.backnav a:hover{color:var(--known)}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.75;margin:0;
+     -webkit-font-smoothing:antialiased;font-size:15px}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:40px 64px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);letter-spacing:-.01em}
+h2{font-size:clamp(19px,3.6vw,25px)}
+h3{font-size:16px}
+p{margin:.7em 0}
+a{color:var(--known);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--hypo);outline-offset:2px;border-radius:2px}
+.eyebrow{font-family:var(--term);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.lede{font-size:17px;color:var(--ink-soft);max-width:62ch}
+.t em{font-family:var(--term);font-style:normal;font-size:.76em;color:var(--ink-soft);letter-spacing:.01em;padding-left:.35em}
+sup a{font-family:var(--term);font-size:10px;text-decoration:none;padding:0 1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:8px;font-size:12.5px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:999px;padding:5px 13px 5px 10px}
+.swatch{width:26px;height:0;border-top-width:2.5px;flex:none}
+.sw-k{border-top-style:solid;border-top-color:var(--known)}
+.sw-h{border-top-style:dashed;border-top-color:var(--hypo)}
+.sw-p{border-top-style:dashed;border-top-color:var(--patho)}
+.note{background:var(--surface-2);border-left:3px solid var(--rule);padding:14px 18px;margin:28px 0;font-size:13.5px;color:var(--ink-soft)}
+.note strong{color:var(--ink)}
+section{margin-top:52px;padding-top:28px;border-top:1px solid var(--rule)}
+.step-no{font-family:var(--term);font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft);display:block;margin-bottom:6px}
+.tag{font-family:var(--term);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:4px;white-space:nowrap;display:inline-block;vertical-align:2px}
+.tag-k{background:var(--known-wash);color:var(--known)}
+.tag-h{background:var(--hypo-wash);color:var(--hypo)}
+.tag-p{background:var(--patho-wash);color:var(--patho)}
+figure{margin:26px 0 0}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px}
+.scroll svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--ink-soft);margin-top:10px;max-width:70ch}
+svg text{fill:currentColor}
+svg .lbl{font-family:var(--body);font-weight:500;font-size:13px}
+svg .en{font-family:var(--term);font-size:9.5px;fill:var(--ink-soft)}
+svg .arw{font-family:var(--body);font-weight:500;font-size:11px}
+svg .arwen{font-family:var(--term);font-size:9px;fill:var(--ink-soft)}
+svg .box{fill:var(--surface);stroke:var(--rule);stroke-width:1.2}
+svg .k{stroke:var(--known);fill:none;stroke-width:1.7}
+svg .h{stroke:var(--hypo);fill:none;stroke-width:1.7;stroke-dasharray:6 4}
+svg .hb{stroke:var(--hypo);fill:none;stroke-width:3;stroke-dasharray:7 4}
+svg .p{stroke:var(--patho);fill:none;stroke-width:1.7;stroke-dasharray:4 4}
+svg .mk-k{fill:var(--known)}
+svg .mk-h{fill:var(--hypo)}
+svg .mk-p{fill:var(--patho)}
+svg .tau{fill:var(--patho-wash);stroke:var(--patho);stroke-width:1.3}
+svg .pep{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.1}
+svg .seg-a{fill:var(--known-wash);stroke:var(--known);stroke-width:1.3}
+svg .seg-b{fill:var(--hypo-wash);stroke:var(--hypo);stroke-width:1.3}
+svg .seg-c{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.3}
+svg .ghost{fill:none;stroke:var(--ink-soft);stroke-width:1.1;stroke-dasharray:3 3}
+.eq{font-family:var(--term);font-size:13px;background:var(--surface);border:1px solid var(--rule);
+    border-left:3px solid var(--known);border-radius:4px;padding:12px 16px;margin:18px 0;overflow-x:auto;white-space:nowrap}
+.eq small{display:block;white-space:normal;font-family:var(--body);font-size:12px;color:var(--ink-soft);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;min-width:0}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;margin:.4em 0 0;color:var(--ink-soft)}
+.card.hypo{border-left:3px solid var(--hypo)}
+.card.known{border-left:3px solid var(--known)}
+.card.patho{border-left:3px solid var(--patho)}
+.neq{font-family:var(--term);font-size:14.5px;color:var(--ink);display:block;margin-bottom:4px;word-break:break-word}
+.m22{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;margin-top:22px;font-size:13px;min-width:0}
+.m22 .rh,.m22 .ch{font-family:var(--term);font-size:11px;letter-spacing:.04em;color:var(--ink-soft);align-self:center}
+.m22 .cell{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:12px 14px;min-width:0}
+.m22 .cell b{display:block;font-weight:500;font-size:13.5px}
+.m22 .cell span{color:var(--ink-soft);font-size:12.5px}
+.m22 .target{border:1.5px solid var(--hypo);background:var(--hypo-wash)}
+.tablewrap{overflow-x:auto;margin-top:22px;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:13.5px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--term);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+td:first-child{font-weight:500}
+.mark{font-family:var(--term);font-size:14px;font-variant-numeric:tabular-nums}
+.yes{color:var(--known)}
+.no{color:var(--patho)}
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 28px;margin:18px 0 0}
+dl.gloss>div{border-bottom:1px solid var(--rule);padding:11px 0;min-width:0}
+dt{font-weight:500;font-size:14px}
+dt span{font-family:var(--term);font-size:11.5px;color:var(--ink-soft);padding-left:.5em}
+dd{margin:3px 0 0;font-size:13px;color:var(--ink-soft)}
+ol.refs{font-size:12.5px;color:var(--ink-soft);padding-left:22px;margin-top:18px}
+ol.refs li{margin:7px 0;word-break:break-word}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="backnav"><a href="../../index.html">&#8592; 返回目录 / INDEX</a></nav>
+
+
+<p class="eyebrow">Topic 03 · α-突触核蛋白与"类朊病毒"传播</p>
+<h1>α-syn 的"传播"：哪一步是实验事实，哪一步是类比</h1>
+<p class="lede">α-突触核蛋白病理在脑中呈现有次序的扩展，这促成了"类朊病毒式传播"的叙述。本页把这个叙述拆成四段：<b>模板化扩增</b>、<b>细胞间转移</b>、<b>区域间推进</b>、<b>致病后果</b>——其中只有前两段在实验里有扎实支持，后两段仍有大量争论。</p>
+
+<ul class="legend">
+  <li><span class="swatch sw-k"></span>已验证的通用生物学 <span class="t"><em>established</em></span></li>
+  <li><span class="swatch sw-h"></span>有支持但仍待检验 <span class="t"><em>to be tested</em></span></li>
+  <li><span class="swatch sw-p"></span>反例／使叙述失效的分支 <span class="t"><em>counter-evidence</em></span></li>
+</ul>
+
+<div class="note">
+<strong>先立一条边界：</strong>"类朊病毒 <span class="t"><em>prion-like</em></span>"说的是<b>分子层面的构象模板化</b>，<b>不是</b>说帕金森病具有传染性。至今没有证据表明它在人与人之间传播。这两件事在文献里是分开的命题，写在一起会直接出事。<sup><a href="#r13">13</a></sup>
+</div>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1200 270" role="img" aria-label="α-突触核蛋白从单体经错误折叠、寡聚体、淀粉样纤维到路易病理；纤维可释放并被邻近神经元摄取，在新细胞中充当模板，形成传播回路" style="min-width:880px">
+      <defs>
+        <marker id="b1k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="b1h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="b1p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="30"  y="46" width="160" height="46" rx="5"/><text class="lbl" x="110" y="67" text-anchor="middle">α-syn 单体</text><text class="en" x="110" y="83" text-anchor="middle">monomer</text>
+      <rect class="box" x="240" y="46" width="170" height="46" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="325" y="67" text-anchor="middle">错误折叠构象</text><text class="en" x="325" y="83" text-anchor="middle">misfolded conformer</text>
+      <rect class="box" x="460" y="46" width="150" height="46" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="535" y="67" text-anchor="middle">寡聚体</text><text class="en" x="535" y="83" text-anchor="middle">oligomer</text>
+      <rect class="box" x="660" y="46" width="150" height="46" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="735" y="67" text-anchor="middle">淀粉样纤维</text><text class="en" x="735" y="83" text-anchor="middle">amyloid fibril</text>
+      <rect class="box" x="860" y="46" width="200" height="46" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="960" y="67" text-anchor="middle">路易病理</text><text class="en" x="960" y="83" text-anchor="middle">Lewy pathology</text>
+
+      <line class="h" x1="194" y1="69" x2="232" y2="69" marker-end="url(#b1h)"/>
+      <line class="p" x1="414" y1="69" x2="452" y2="69" marker-end="url(#b1p)"/>
+      <line class="p" x1="614" y1="69" x2="652" y2="69" marker-end="url(#b1p)"/>
+      <line class="p" x1="814" y1="69" x2="852" y2="69" marker-end="url(#b1p)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="213" y="26" style="fill:var(--hypo)">构象改变</text><text class="arwen" x="213" y="38">misfold</text>
+        <text class="arw" x="433" y="26" style="fill:var(--patho)">自聚</text><text class="arwen" x="433" y="38">self-assemble</text>
+        <text class="arw" x="633" y="26" style="fill:var(--patho)">延长</text><text class="arwen" x="633" y="38">elongate</text>
+        <text class="arw" x="833" y="26" style="fill:var(--patho)">形成包涵体</text><text class="arwen" x="833" y="38">inclusion</text>
+      </g>
+      <text class="en" x="1075" y="63" text-anchor="start">包涵体内</text>
+      <text class="en" x="1075" y="77" text-anchor="start">还有大量膜与细胞器<sup>12</sup></text>
+
+      <path class="h" d="M735 96 C735 132 730 150 724 174" marker-end="url(#b1h)"/>
+      <rect class="box" x="380" y="180" width="560" height="68" rx="5" style="stroke:var(--hypo)"/>
+      <text class="lbl" x="396" y="204">释放 → 被邻近神经元摄取 → 在新细胞里充当种子</text>
+      <text class="en"  x="396" y="222">release → uptake → templated seeding in the next neuron</text>
+      <text class="en"  x="396" y="239" style="fill:var(--hypo)">这条回路就是"传播"叙述的全部承重结构</text>
+
+      <path class="h" d="M376 214 C200 214 150 150 320 98" marker-end="url(#b1h)"/>
+      <text class="arw" x="170" y="140" text-anchor="middle" style="fill:var(--hypo)">回路</text>
+      <text class="arwen" x="170" y="153" text-anchor="middle">feed-forward loop</text>
+    </svg>
+  </div>
+  <figcaption><b>图 1 · 一条自我放大的回路。</b>α-syn 本身是突触前蛋白，参与 SNARE 复合物组装等过程。<sup><a href="#r15">15</a></sup>病理形态下它形成纤维并聚成包涵体；冷冻电镜与相关成像显示路易病理中<b>还富含膜性细胞器和脂质</b>，不只是蛋白纤维团。<sup><a href="#r12">12</a></sup></figcaption>
+</figure>
+
+<!-- ============ 模板化 ============ -->
+<section>
+<span class="step-no">第 1 段 / TEMPLATING</span>
+<h2>模板化扩增：这一段证据最硬 <span class="tag tag-k">体外已验证</span></h2>
+<p>把预先形成的纤维（<span class="t">预成纤维<em>pre-formed fibrils, PFF</em></span>）加到含正常 α-syn 的体系里，正常分子会按纤维末端的构象排布上去——这是<span class="t">晶种式延长<em>seeded elongation</em></span>。纤维<span class="t">断裂<em>fragmentation</em></span>后末端数量翻倍，使整体呈指数式增长。</p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 900 232" role="img" aria-label="种子存在、单体加到纤维末端、纤维延长、断裂产生两个种子，形成指数式扩增循环" style="min-width:680px">
+      <defs>
+        <marker id="b2k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="b2h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="20"  y="80" width="180" height="60" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="110" y="106" text-anchor="middle">① 种子存在</text><text class="en" x="110" y="124" text-anchor="middle">a seed with a defined fold</text>
+      <rect class="box" x="250" y="80" width="200" height="60" rx="5"/><text class="lbl" x="350" y="106" text-anchor="middle">② 单体加到末端</text><text class="en" x="350" y="124" text-anchor="middle">monomer adds to the tip</text>
+      <rect class="box" x="500" y="80" width="160" height="60" rx="5"/><text class="lbl" x="580" y="106" text-anchor="middle">③ 纤维变长</text><text class="en" x="580" y="124" text-anchor="middle">elongation</text>
+      <rect class="box" x="710" y="80" width="170" height="60" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="795" y="106" text-anchor="middle">④ 断裂 → 两个种子</text><text class="en" x="795" y="124" text-anchor="middle">fragmentation</text>
+
+      <line class="k" x1="204" y1="110" x2="242" y2="110" marker-end="url(#b2k)"/>
+      <line class="k" x1="454" y1="110" x2="492" y2="110" marker-end="url(#b2k)"/>
+      <line class="k" x1="664" y1="110" x2="702" y2="110" marker-end="url(#b2k)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="223" y="50">构象被复制</text><text class="arwen" x="223" y="62">templated</text>
+        <text class="arw" x="473" y="50">不断重复</text><text class="arwen" x="473" y="62">repeat</text>
+        <text class="arw" x="683" y="50">末端数翻倍</text><text class="arwen" x="683" y="62">tips double</text>
+      </g>
+      <path class="h" d="M795 144 C795 214 120 214 110 146" marker-end="url(#b2h)"/>
+      <text class="lbl" x="450" y="182" text-anchor="middle" style="fill:var(--hypo)">回到 ①：可用末端越多，扩增越快</text>
+      <text class="en"  x="450" y="198" text-anchor="middle">exponential amplification — the basis of RT-QuIC / PMCA assays</text>
+    </svg>
+  </div>
+  <figcaption><b>图 2 · 模板化 = 复制构象，不是复制序列。</b>这一点让它区别于核酸复制：被传下去的是<b>折叠方式</b>。正因为它可以在试管里指数扩增，<span class="t"><em>RT-QuIC</em></span>这类检测才能把极微量种子放大到可测水平——这同时也是最可靠的"种子活性"读数。</figcaption>
+</figure>
+
+<div class="cards">
+  <div class="card hypo"><span class="neq">种子活性 ≠ 毒性</span><p>一份样品能在试管里引发扩增，不等于它在神经元里有害。毒性要用细胞／动物读数单独证明。</p></div>
+  <div class="card known"><h3>不同"毒株"可以共存</h3><p>同一条序列可以折成不同纤维构象，产生不同的病理表型——这是解释多系统萎缩与帕金森病差异的主要假说之一。</p></div>
+</div>
+</section>
+
+<!-- ============ 细胞间转移 ============ -->
+<section>
+<span class="step-no">第 2 段 / CELL-TO-CELL</span>
+<h2>细胞间转移：路径不止一条，权重不清楚 <span class="tag tag-h">待定量</span></h2>
+<p>α-syn 病理可以从一个神经元到达另一个。最有分量的人体线索来自移植研究：帕金森病患者接受<span class="t">胚胎中脑移植<em>fetal nigral graft</em></span>十年以上后，<b>本来健康的移植神经元里出现了路易样病理</b>。<sup><a href="#r5">5</a></sup>这强烈提示"宿主 → 移植物"的方向性转移，但没有告诉我们走的是哪条路。</p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1000 300" role="img" aria-label="供体神经元到受体神经元之间的四条转移路径：直接释放后内吞、细胞外囊泡、隧道纳米管、受体介导摄取" style="min-width:720px">
+      <defs>
+        <marker id="b3k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="b3h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="20"  y="24" width="160" height="250" rx="8" style="stroke:var(--patho)"/>
+      <text class="lbl" x="100" y="140" text-anchor="middle">供体神经元</text>
+      <text class="en"  x="100" y="156" text-anchor="middle">donor · 已有病理</text>
+      <rect class="box" x="820" y="24" width="160" height="250" rx="8"/>
+      <text class="lbl" x="900" y="140" text-anchor="middle">受体神经元</text>
+      <text class="en"  x="900" y="156" text-anchor="middle">recipient · 原本正常</text>
+
+      <rect class="box" x="230" y="34" width="540" height="50" rx="5" style="stroke:var(--known)"/>
+      <text class="lbl" x="246" y="55">① 非经典分泌后被内吞</text><text class="en" x="246" y="72">unconventional secretion → endocytosis · 体外反复观察到</text>
+
+      <rect class="box" x="230" y="98" width="540" height="50" rx="5" style="stroke:var(--known)"/>
+      <text class="lbl" x="246" y="119">② 细胞外囊泡携带</text><text class="en" x="246" y="136">extracellular vesicles / exosomes · 有证据，占比未知</text>
+
+      <rect class="box" x="230" y="162" width="540" height="50" rx="5" style="stroke:var(--hypo)"/>
+      <text class="lbl" x="246" y="183">③ 隧道纳米管，连同溶酶体一起转移</text><text class="en" x="246" y="200">tunneling nanotubes · 细胞模型中观察到，在体权重待定</text>
+
+      <rect class="box" x="230" y="226" width="540" height="50" rx="5" style="stroke:var(--patho)"/>
+      <text class="lbl" x="246" y="247">④ 受体介导摄取（含争议受体）</text><text class="en" x="246" y="264">LAG3 曾被提出，后续研究未能重复其在神经元中的表达与作用</text>
+
+      <line class="k" x1="184" y1="59"  x2="222" y2="59"  marker-end="url(#b3k)"/>
+      <line class="k" x1="184" y1="123" x2="222" y2="123" marker-end="url(#b3k)"/>
+      <line class="h" x1="184" y1="187" x2="222" y2="187" marker-end="url(#b3h)"/>
+      <line class="h" x1="184" y1="251" x2="222" y2="251" marker-end="url(#b3h)"/>
+      <line class="k" x1="774" y1="59"  x2="812" y2="59"  marker-end="url(#b3k)"/>
+      <line class="k" x1="774" y1="123" x2="812" y2="123" marker-end="url(#b3k)"/>
+      <line class="h" x1="774" y1="187" x2="812" y2="187" marker-end="url(#b3h)"/>
+      <line class="h" x1="774" y1="251" x2="812" y2="251" marker-end="url(#b3h)"/>
+    </svg>
+  </div>
+  <figcaption><b>图 3 · 四条路不是互斥的。</b>隧道纳米管可把纤维连同<span class="t">溶酶体<em>lysosome</em></span>一并带到邻近细胞。<sup><a href="#r11">11</a></sup>受体那一行尤其要小心：<span class="t"><em>LAG3</em></span>曾被报告为 α-syn 纤维的神经元受体，<sup><a href="#r9">9</a></sup>但后续工作报告在人和小鼠神经元中检测不到 LAG3 表达，也未见其调节 α-syn 病理。<sup><a href="#r10">10</a></sup>本页把它画成待定分支，而不是既定机制。</figcaption>
+</figure>
+
+<div class="cards">
+  <div class="card hypo"><span class="neq">共定位 ≠ 转移</span><p>在受体细胞里看到信号，也可能是染料泄漏、细胞融合或残留碎片。转移要用可分辨供受体的标记体系来证明。</p></div>
+  <div class="card hypo"><span class="neq">注射后扩散 ≠ 生理传播</span><p>向小鼠脑内注射 PFF 可诱发沿连接扩展的病理，<sup><a href="#r6">6</a></sup>但注射量远超生理水平。模型证明的是"<b>能够</b>发生"，不是"<b>本来就这样</b>发生"。</p></div>
+</div>
+</section>
+
+<!-- ============ 区域推进 ============ -->
+<section>
+<span class="step-no">第 3 段 / STAGING</span>
+<h2>区域间推进：Braak 分期是假说，不是定律 <span class="tag tag-p">有明确反例</span></h2>
+<p>Braak 等基于尸检材料提出：散发性帕金森病的 α-syn 病理有固定的上行次序，大致从<span class="t">迷走神经背核<em>dorsal motor nucleus of the vagus</em></span>与<span class="t">嗅球<em>olfactory bulb</em></span>起步，向脑桥、中脑<span class="t">黑质<em>substantia nigra</em></span>，再到<span class="t">新皮层<em>neocortex</em></span>。<sup><a href="#r4">4</a></sup></p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1150 210" role="img" aria-label="Braak 分期假说的上行次序：迷走神经背核与嗅球、脑桥、黑质、边缘系统、新皮层；并标注相当比例病例不符合该次序" style="min-width:820px">
+      <defs>
+        <marker id="b4h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="20"  y="48" width="200" height="56" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="120" y="72" text-anchor="middle">迷走背核 / 嗅球</text><text class="en" x="120" y="89" text-anchor="middle">stage 1</text>
+      <rect class="box" x="258" y="48" width="170" height="56" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="343" y="72" text-anchor="middle">脑桥被盖</text><text class="en" x="343" y="89" text-anchor="middle">stage 2</text>
+      <rect class="box" x="466" y="48" width="170" height="56" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="551" y="72" text-anchor="middle">中脑黑质</text><text class="en" x="551" y="89" text-anchor="middle">stage 3 · 运动症状</text>
+      <rect class="box" x="674" y="48" width="170" height="56" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="759" y="72" text-anchor="middle">边缘系统</text><text class="en" x="759" y="89" text-anchor="middle">stage 4</text>
+      <rect class="box" x="882" y="48" width="200" height="56" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="982" y="72" text-anchor="middle">新皮层</text><text class="en" x="982" y="89" text-anchor="middle">stage 5–6</text>
+
+      <line class="h" x1="224" y1="76" x2="250" y2="76" marker-end="url(#b4h)"/>
+      <line class="h" x1="432" y1="76" x2="458" y2="76" marker-end="url(#b4h)"/>
+      <line class="h" x1="640" y1="76" x2="666" y2="76" marker-end="url(#b4h)"/>
+      <line class="h" x1="848" y1="76" x2="874" y2="76" marker-end="url(#b4h)"/>
+      <text class="en" x="551" y="28" text-anchor="middle" style="fill:var(--hypo)">整条次序由横断面尸检材料推断，不是对同一个人纵向观察到的</text>
+
+      <rect class="box" x="20" y="130" width="1062" height="64" rx="5" style="stroke:var(--patho)"/>
+      <text class="lbl" x="36" y="154">反例：相当比例的病例并不符合这个次序，一部分在迷走背核无病理却已有皮层病理</text>
+      <text class="en"  x="36" y="172">a substantial fraction of cases cannot be assigned to the scheme — the staging describes a common pattern, not a law</text>
+      <text class="en"  x="36" y="188" style="fill:var(--patho)">把分期当成"病理必然这样走"，是本领域最常见的过度推论</text>
+    </svg>
+  </div>
+  <figcaption><b>图 4 · 一个有用但有边界的框架。</b>"肠—脑轴"版本进一步提出病理可由肠神经经迷走神经上行：动物实验中向肠壁注射 PFF 可见沿迷走上行的病理，切断迷走神经可阻断之；<sup><a href="#r14">14</a></sup>流行病学上也观察到迷走神经切断史与后续帕金森病风险的关联。<sup><a href="#r16">16</a></sup>这些支持"<b>可以</b>这样走"，不支持"<b>都</b>这样走"。</figcaption>
+</figure>
+</section>
+
+<!-- ============ 验证 ============ -->
+<section>
+<span class="step-no">验证 / EVIDENCE</span>
+<h2>四段叙述，各自该用什么读数</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>要证明的命题</th><th>对应读数</th><th>它不能证明什么</th></tr></thead>
+<tbody>
+<tr><td>模板化扩增存在<br><span class="en" style="font-family:var(--term);font-size:11px">templating</span></td>
+    <td>RT-QuIC / PMCA 的种子扩增动力学；冷冻电镜解析纤维构象</td><td>不能证明毒性，也不能证明在体速率</td></tr>
+<tr><td>病理确实跨了细胞<br><span class="en" style="font-family:var(--term);font-size:11px">transfer</span></td>
+    <td>微流控分室共培养，供受体分别标记；长期移植物中的宿主来源病理<sup><a href="#r5">5</a></sup></td><td>不能分辨走的是哪一条转移路径</td></tr>
+<tr><td>按神经连接推进<br><span class="en" style="font-family:var(--term);font-size:11px">connectome-based spread</span></td>
+    <td>定点注射 PFF 后的时序图谱，与连接组预测对比；切断通路后应当改变模式<sup><a href="#r14">14</a></sup></td><td>不能外推到人的自然病程</td></tr>
+<tr><td>病理导致神经元死亡<br><span class="en" style="font-family:var(--term);font-size:11px">causality of loss</span></td>
+    <td>病理负荷与细胞计数的剂量—反应关系；敲低内源 α-syn 后病理应消失</td><td>包涵体存在本身不等于该细胞因此死亡</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note" style="border-left-color:var(--hypo)">
+<strong>最后一行最容易被跳过。</strong>在小鼠中，若宿主缺乏内源 α-syn，外源纤维不能诱发持续病理——这是"模板化确实需要底物"的关键对照。把它写进方案，比多加一个染色更有说服力。
+</div>
+</section>
+
+<!-- ============ 术语表 ============ -->
+<section>
+<span class="step-no">对照表 / GLOSSARY</span>
+<h2>术语中英对照</h2>
+
+<h3 style="margin-top:22px">名词 Nouns</h3>
+<dl class="gloss">
+<div><dt>α-突触核蛋白<span>alpha-synuclein, α-syn</span></dt><dd>由 SNCA 基因编码的突触前蛋白，是路易病理的主要成分。<sup><a href="#r1">1</a></sup></dd></div>
+<div><dt>路易小体 / 路易神经突<span>Lewy body / Lewy neurite</span></dt><dd>含 α-syn 的细胞内包涵体；现代成像显示其中还富含膜与细胞器。<sup><a href="#r12">12</a></sup></dd></div>
+<div><dt>构象异构体 / 毒株<span>conformer / strain</span></dt><dd>同一序列折成的不同稳定构象，可对应不同病理表型。</dd></div>
+<div><dt>种子<span>seed</span></dt><dd>能把自身构象传给正常分子的聚集体片段。</dd></div>
+<div><dt>预成纤维<span>pre-formed fibril, PFF</span></dt><dd>体外制备好的纤维，常用作接种材料。</dd></div>
+<div><dt>晶种式延长<span>seeded elongation</span></dt><dd>单体按纤维末端构象加上去的生长方式。</dd></div>
+<div><dt>断裂<span>fragmentation</span></dt><dd>长纤维断成短段，使可用末端数增加。</dd></div>
+<div><dt>RT-QuIC<span>real-time quaking-induced conversion</span></dt><dd>靠反复振荡断裂实现指数扩增的种子活性检测。</dd></div>
+<div><dt>细胞外囊泡<span>extracellular vesicle, EV</span></dt><dd>细胞释放的膜性小泡，可携带蛋白货物。</dd></div>
+<div><dt>隧道纳米管<span>tunneling nanotube, TNT</span></dt><dd>连接两个细胞的细长膜管，可运送细胞器与聚集体。<sup><a href="#r11">11</a></sup></dd></div>
+<div><dt>硫酸乙酰肝素蛋白聚糖<span>heparan sulfate proteoglycan, HSPG</span></dt><dd>细胞表面带负电的多糖蛋白，参与多种淀粉样聚集体的摄取。</dd></div>
+<div><dt>LAG3<span>lymphocyte-activation gene 3</span></dt><dd>曾被提出的 α-syn 纤维受体；其在神经元中的表达与作用存在重复性争议。<sup><a href="#r9">9</a></sup><sup><a href="#r10">10</a></sup></dd></div>
+<div><dt>黑质致密部<span>substantia nigra pars compacta</span></dt><dd>多巴胺能神经元所在区域，其丢失对应运动症状。</dd></div>
+<div><dt>迷走神经背核<span>dorsal motor nucleus of the vagus</span></dt><dd>Braak 分期假设的早期受累部位之一。</dd></div>
+<div><dt>肠神经系统<span>enteric nervous system</span></dt><dd>肠壁中的神经网络，是"肠—脑轴"假说的起点。</dd></div>
+<div><dt>多系统萎缩<span>multiple system atrophy, MSA</span></dt><dd>另一种 α-syn 病，病理主要在少突胶质细胞内，常用于"毒株差异"的论证。</dd></div>
+<div><dt>SNARE 复合物<span>SNARE complex</span></dt><dd>介导囊泡融合的蛋白复合物；α-syn 参与其组装。<sup><a href="#r15">15</a></sup></dd></div>
+<div><dt>基因剂量<span>gene dosage</span></dt><dd>SNCA 位点的重复/三倍体可致病，说明"量"本身足以驱动病理。<sup><a href="#r3">3</a></sup></dd></div>
+</dl>
+
+<h3 style="margin-top:30px">动词 Verbs</h3>
+<dl class="gloss">
+<div><dt>错误折叠<span>misfold</span></dt><dd>折成非天然但稳定的构象。</dd></div>
+<div><dt>模板化<span>template</span></dt><dd>把自身构象强加给接触到的同种分子。</dd></div>
+<div><dt>接种<span>seed / inoculate</span></dt><dd>加入少量种子以引发聚集。</dd></div>
+<div><dt>延长<span>elongate</span></dt><dd>纤维从末端持续加长。</dd></div>
+<div><dt>断裂<span>fragment</span></dt><dd>断成更短的片段，提升扩增速率。</dd></div>
+<div><dt>分泌<span>secrete</span></dt><dd>释放到细胞外；α-syn 走的是非经典分泌途径。</dd></div>
+<div><dt>内吞<span>endocytose</span></dt><dd>细胞把胞外物质包入膜泡带进来。</dd></div>
+<div><dt>转移<span>transfer</span></dt><dd>从一个细胞到达另一个细胞；需可分辨供受体才能证明。</dd></div>
+<div><dt>推进 / 扩展<span>propagate / spread</span></dt><dd>病理在区域之间推进；与分子层面的模板化是两个层级。</dd></div>
+<div><dt>阻断<span>abrogate</span></dt><dd>切断通路或去掉底物，用于验证必要性。</dd></div>
+<div><dt>分期<span>stage</span></dt><dd>按受累部位给病理排序；描述的是常见模式。</dd></div>
+<div><dt>重复验证<span>replicate</span></dt><dd>独立实验室重做；LAG3 一例说明它为何不可省。</dd></div>
+</dl>
+</section>
+
+<!-- ============ 结论 ============ -->
+<section>
+<span class="step-no">结论 / BOTTOM LINE</span>
+<h2>核心结论</h2>
+<div class="cards">
+  <div class="card known"><h3>① 构象模板化：确立</h3><p>可在体外指数扩增，并已被做成检测方法。</p></div>
+  <div class="card known"><h3>② 细胞间转移：确立，权重未知</h3><p>移植物病理是最硬的人体线索；具体走哪条路尚未定量。</p></div>
+  <div class="card hypo"><h3>③ 沿连接推进：有支持，有反例</h3><p>动物模型能复现；人群中相当比例不符合固定分期。</p></div>
+  <div class="card patho"><h3>④ "传染"：无证据</h3><p>分子层面的类朊病毒行为与流行病学意义上的传染性，是两回事。<sup><a href="#r13">13</a></sup></p></div>
+</div>
+
+<ol class="refs">
+<li id="r1">Spillantini MG 等，1997，<i>Nature</i>：路易小体中的 α-突触核蛋白 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Alpha-synuclein+in+Lewy+bodies">PubMed 检索</a></li>
+<li id="r2">Polymeropoulos MH 等，1997，<i>Science</i>：SNCA 突变与家族性帕金森病 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Mutation+in+the+alpha-synuclein+gene+identified+in+families+with+Parkinson%27s+disease">PubMed 检索</a></li>
+<li id="r3">Singleton AB 等，2003，<i>Science</i>：α-syn 位点三倍体可致帕金森病 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=alpha-Synuclein+locus+triplication+causes+Parkinson%27s+disease">PubMed 检索</a></li>
+<li id="r4">Braak H 等，2003，<i>Neurobiology of Aging</i>：散发性帕金森病脑病理的分期 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Staging+of+brain+pathology+related+to+sporadic+Parkinson%27s+disease">PubMed 检索</a></li>
+<li id="r5">Kordower JH 等 / Li JY 等，2008，<i>Nature Medicine</i>：长期胚胎中脑移植物中出现路易样病理 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Lewy+body-like+pathology+in+long-term+embryonic+nigral+transplants">PubMed 检索</a></li>
+<li id="r6">Luk KC 等，2012，<i>Science</i>：病理性 α-syn 的传递在非转基因小鼠中引发帕金森样退行 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Pathological+alpha-synuclein+transmission+initiates+Parkinson-like+neurodegeneration+in+nontransgenic+mice">PubMed 检索</a></li>
+<li id="r7">Volpicelli-Daley LA 等，2011，<i>Neuron</i>：外源 α-syn 纤维诱发路易样病理与突触功能障碍 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Exogenous+alpha-synuclein+fibrils+induce+Lewy+body+pathology">PubMed 检索</a></li>
+<li id="r8">Desplats P 等，2009，<i>PNAS</i>：神经元间 α-syn 传递导致包涵体形成与细胞死亡 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Inclusion+formation+and+neuronal+cell+death+through+neuron-to-neuron+transmission+of+alpha-synuclein">PubMed 检索</a></li>
+<li id="r9">Mao X 等，2016，<i>Science</i>：LAG3 结合启动病理性 α-syn 的传递 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Pathological+alpha-synuclein+transmission+initiated+by+binding+lymphocyte-activation+gene+3">PubMed 检索</a></li>
+<li id="r10">Emmenegger M 等，2021，<i>EMBO Molecular Medicine</i>：LAG3 在人与小鼠神经元中不表达，且不调节 α-syn 病理 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=LAG3+is+not+expressed+in+human+and+murine+neurons">PubMed 检索</a></li>
+<li id="r11">Abounit S 等，2016，<i>EMBO Journal</i>：隧道纳米管经溶酶体的细胞间运输传播纤维性 α-syn — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Tunneling+nanotubes+spread+fibrillar+alpha-synuclein+by+intercellular+trafficking+of+lysosomes">PubMed 检索</a></li>
+<li id="r12">Shahmoradian SH 等，2019，<i>Nature Neuroscience</i>：帕金森病中的路易病理由拥挤的细胞器与脂膜构成 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Lewy+pathology+in+Parkinson%27s+disease+consists+of+crowded+organelles+and+lipid+membranes">PubMed 检索</a></li>
+<li id="r13">Surmeier DJ、Obeso JA、Halliday GM，2017，<i>Nature Reviews Neuroscience</i>：帕金森病并不只是一种朊病毒病 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Parkinson%27s+disease+is+not+simply+a+prion+disorder">PubMed 检索</a></li>
+<li id="r14">Kim S 等，2019，<i>Neuron</i>：病理性 α-syn 自肠向脑的跨神经元传播 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Transneuronal+propagation+of+pathologic+alpha-synuclein+from+the+gut+to+the+brain">PubMed 检索</a></li>
+<li id="r15">Burré J 等，2010，<i>Science</i>：α-syn 促进 SNARE 复合物组装 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Alpha-synuclein+promotes+SNARE-complex+assembly+in+vivo+and+in+vitro">PubMed 检索</a></li>
+<li id="r16">Svensson E 等，2015，<i>Annals of Neurology</i>：迷走神经切断与后续帕金森病风险 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Vagotomy+and+subsequent+risk+of+Parkinson%27s+disease">PubMed 检索</a></li>
+</ol>
+</section>
+
+<footer>
+本页为机制讲解与读图训练。"类朊病毒"在本页始终指分子层面的构象模板化，不涉及人际传染。参考条目以标题给出并链接到 PubMed 检索，便于核对原文。非临床建议。
+</footer>
+
+
+</div>
+
+</body>
+</html>
