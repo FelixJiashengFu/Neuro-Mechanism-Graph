@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Aβ 四条清除通路的交互图解：酶解、跨血脑屏障外排、胶质吞噬与类淋巴／脑膜淋巴引流。实线画已验证生物学，虚线画仍在争论的部分，术语附中英对照。">
+<title>Aβ 清除机制图解｜酶解 · BBB 外排 · 胶质吞噬 · 类淋巴引流</title>
+<style>
+:root{
+  --paper:#f6f8fa;
+  --surface:#ffffff;
+  --surface-2:#eef2f6;
+  --ink:#161b22;
+  --ink-soft:#5b6673;
+  --rule:#d6dce4;
+  --known:#0f6b70;        /* 已验证的通用生物学 */
+  --known-wash:#e2f0f0;
+  --hypo:#8f5300;         /* 待检验的假设 */
+  --hypo-wash:#faecd8;
+  --patho:#962b64;        /* 病理物种 / 失效分支 */
+  --patho-wash:#f8e5ee;
+  --display:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Times New Roman",Georgia,serif;
+  --body:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --term:ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+.backnav{font-family:var(--term);font-size:11px;letter-spacing:.1em;margin-bottom:20px}
+.backnav a{color:var(--ink-soft);text-decoration:none}
+.backnav a:hover{color:var(--known)}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.75;margin:0;
+     -webkit-font-smoothing:antialiased;font-size:15px}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:40px 64px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);letter-spacing:-.01em}
+h2{font-size:clamp(19px,3.6vw,25px)}
+h3{font-size:16px}
+p{margin:.7em 0}
+a{color:var(--known);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--hypo);outline-offset:2px;border-radius:2px}
+.eyebrow{font-family:var(--term);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.lede{font-size:17px;color:var(--ink-soft);max-width:62ch}
+.t em{font-family:var(--term);font-style:normal;font-size:.76em;color:var(--ink-soft);letter-spacing:.01em;padding-left:.35em}
+sup a{font-family:var(--term);font-size:10px;text-decoration:none;padding:0 1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:8px;font-size:12.5px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:999px;padding:5px 13px 5px 10px}
+.swatch{width:26px;height:0;border-top-width:2.5px;flex:none}
+.sw-k{border-top-style:solid;border-top-color:var(--known)}
+.sw-h{border-top-style:dashed;border-top-color:var(--hypo)}
+.sw-p{border-top-style:dashed;border-top-color:var(--patho)}
+.note{background:var(--surface-2);border-left:3px solid var(--rule);padding:14px 18px;margin:28px 0;font-size:13.5px;color:var(--ink-soft)}
+.note strong{color:var(--ink)}
+section{margin-top:52px;padding-top:28px;border-top:1px solid var(--rule)}
+.step-no{font-family:var(--term);font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft);display:block;margin-bottom:6px}
+.tag{font-family:var(--term);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:4px;white-space:nowrap;display:inline-block;vertical-align:2px}
+.tag-k{background:var(--known-wash);color:var(--known)}
+.tag-h{background:var(--hypo-wash);color:var(--hypo)}
+.tag-p{background:var(--patho-wash);color:var(--patho)}
+figure{margin:26px 0 0}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px}
+.scroll svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--ink-soft);margin-top:10px;max-width:70ch}
+svg text{fill:currentColor}
+svg .lbl{font-family:var(--body);font-weight:500;font-size:13px}
+svg .en{font-family:var(--term);font-size:9.5px;fill:var(--ink-soft)}
+svg .arw{font-family:var(--body);font-weight:500;font-size:11px}
+svg .arwen{font-family:var(--term);font-size:9px;fill:var(--ink-soft)}
+svg .box{fill:var(--surface);stroke:var(--rule);stroke-width:1.2}
+svg .k{stroke:var(--known);fill:none;stroke-width:1.7}
+svg .h{stroke:var(--hypo);fill:none;stroke-width:1.7;stroke-dasharray:6 4}
+svg .hb{stroke:var(--hypo);fill:none;stroke-width:3;stroke-dasharray:7 4}
+svg .p{stroke:var(--patho);fill:none;stroke-width:1.7;stroke-dasharray:4 4}
+svg .mk-k{fill:var(--known)}
+svg .mk-h{fill:var(--hypo)}
+svg .mk-p{fill:var(--patho)}
+svg .tau{fill:var(--patho-wash);stroke:var(--patho);stroke-width:1.3}
+svg .pep{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.1}
+svg .seg-a{fill:var(--known-wash);stroke:var(--known);stroke-width:1.3}
+svg .seg-b{fill:var(--hypo-wash);stroke:var(--hypo);stroke-width:1.3}
+svg .seg-c{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.3}
+svg .ghost{fill:none;stroke:var(--ink-soft);stroke-width:1.1;stroke-dasharray:3 3}
+.eq{font-family:var(--term);font-size:13px;background:var(--surface);border:1px solid var(--rule);
+    border-left:3px solid var(--known);border-radius:4px;padding:12px 16px;margin:18px 0;overflow-x:auto;white-space:nowrap}
+.eq small{display:block;white-space:normal;font-family:var(--body);font-size:12px;color:var(--ink-soft);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;min-width:0}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;margin:.4em 0 0;color:var(--ink-soft)}
+.card.hypo{border-left:3px solid var(--hypo)}
+.card.known{border-left:3px solid var(--known)}
+.card.patho{border-left:3px solid var(--patho)}
+.neq{font-family:var(--term);font-size:14.5px;color:var(--ink);display:block;margin-bottom:4px;word-break:break-word}
+.m22{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;margin-top:22px;font-size:13px;min-width:0}
+.m22 .rh,.m22 .ch{font-family:var(--term);font-size:11px;letter-spacing:.04em;color:var(--ink-soft);align-self:center}
+.m22 .cell{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:12px 14px;min-width:0}
+.m22 .cell b{display:block;font-weight:500;font-size:13.5px}
+.m22 .cell span{color:var(--ink-soft);font-size:12.5px}
+.m22 .target{border:1.5px solid var(--hypo);background:var(--hypo-wash)}
+.tablewrap{overflow-x:auto;margin-top:22px;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:13.5px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--term);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+td:first-child{font-weight:500}
+.mark{font-family:var(--term);font-size:14px;font-variant-numeric:tabular-nums}
+.yes{color:var(--known)}
+.no{color:var(--patho)}
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 28px;margin:18px 0 0}
+dl.gloss>div{border-bottom:1px solid var(--rule);padding:11px 0;min-width:0}
+dt{font-weight:500;font-size:14px}
+dt span{font-family:var(--term);font-size:11.5px;color:var(--ink-soft);padding-left:.5em}
+dd{margin:3px 0 0;font-size:13px;color:var(--ink-soft)}
+ol.refs{font-size:12.5px;color:var(--ink-soft);padding-left:22px;margin-top:18px}
+ol.refs li{margin:7px 0;word-break:break-word}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="backnav"><a href="../../index.html">&#8592; 返回目录 / INDEX</a></nav>
+
+
+<p class="eyebrow">Topic 02 · Aβ 清除与脑内体液通路</p>
+<h1>Aβ 不是"产得太多"，多数时候是"清不掉"</h1>
+<p class="lede">散发性阿尔茨海默病里，Aβ 的问题通常出在清除端而非产生端。本页把清除拆成四条并行通路——酶解、跨血脑屏障外排、胶质吞噬、体液引流——<b>实线</b>画已被广泛验证的部分，<b>虚线</b>画至今仍在争论的部分（类淋巴通路的驱动力尤其如此）。</p>
+
+<ul class="legend">
+  <li><span class="swatch sw-k"></span>已验证的通用生物学 <span class="t"><em>established</em></span></li>
+  <li><span class="swatch sw-h"></span>仍有争议／待检验 <span class="t"><em>contested / to be tested</em></span></li>
+  <li><span class="swatch sw-p"></span>使清除失效的分支 <span class="t"><em>failure branch</em></span></li>
+</ul>
+
+<div class="note">
+<strong>本页的立场：</strong>"Aβ 清除下降"是一个<b>速率</b>命题，而斑块负荷是一个<b>存量</b>命题。两者不能互推——看到斑块多，不能直接得出"清除慢"，必须用动力学方法去测。页末给出可以区分两者的读数。
+</div>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1200 260" role="img" aria-label="APP 经分泌酶切割生成 Aβ 单体，单体可聚集为寡聚体与斑块；单体池同时分流到酶解、血脑屏障外排、胶质吞噬、体液引流四条清除通路" style="min-width:880px">
+      <defs>
+        <marker id="a1k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="a1p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="a1h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <!-- top row: production -->
+      <rect class="box" x="40"  y="46" width="150" height="46" rx="5"/><text class="lbl" x="115" y="67" text-anchor="middle">APP</text><text class="en" x="115" y="83" text-anchor="middle">amyloid precursor protein</text>
+      <rect class="box" x="250" y="46" width="200" height="46" rx="5" style="stroke:var(--known)"/><text class="lbl" x="350" y="67" text-anchor="middle">Aβ40 / Aβ42 单体</text><text class="en" x="350" y="83" text-anchor="middle">monomer pool</text>
+      <rect class="box" x="510" y="46" width="160" height="46" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="590" y="67" text-anchor="middle">寡聚体</text><text class="en" x="590" y="83" text-anchor="middle">oligomer</text>
+      <rect class="box" x="730" y="46" width="160" height="46" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="810" y="67" text-anchor="middle">纤维 / 斑块</text><text class="en" x="810" y="83" text-anchor="middle">fibril / plaque</text>
+
+      <line class="k" x1="194" y1="69" x2="242" y2="69" marker-end="url(#a1k)"/>
+      <line class="p" x1="454" y1="69" x2="502" y2="69" marker-end="url(#a1p)"/>
+      <line class="p" x1="674" y1="69" x2="722" y2="69" marker-end="url(#a1p)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="218" y="26">β- 与 γ- 分泌酶切割</text><text class="arwen" x="218" y="38">BACE1 → γ-secretase</text>
+        <text class="arw" x="478" y="26" style="fill:var(--patho)">聚集</text><text class="arwen" x="478" y="38">aggregate</text>
+        <text class="arw" x="698" y="26" style="fill:var(--patho)">沉积</text><text class="arwen" x="698" y="38">deposit</text>
+      </g>
+      <text class="en" x="930" y="63" text-anchor="start">斑块是存量</text>
+      <text class="en" x="930" y="77" text-anchor="start">a stock, not a rate</text>
+
+      <!-- fan to clearance -->
+      <path class="k" d="M330 96 C300 124 220 134 160 174" marker-end="url(#a1k)"/>
+      <path class="k" d="M344 96 C336 128 420 140 440 174" marker-end="url(#a1k)"/>
+      <path class="k" d="M358 96 C380 130 680 136 720 174" marker-end="url(#a1k)"/>
+      <path class="h" d="M372 96 C430 132 960 134 1020 174" marker-end="url(#a1h)"/>
+
+      <rect class="box" x="40"  y="180" width="240" height="62" rx="5" style="stroke:var(--known)"/>
+      <text class="lbl" x="160" y="202" text-anchor="middle">① 酶解</text>
+      <text class="en"  x="160" y="218" text-anchor="middle">neprilysin · IDE · MMP · ACE</text>
+      <text class="en"  x="160" y="233" text-anchor="middle">在细胞外直接断肽键</text>
+
+      <rect class="box" x="320" y="180" width="240" height="62" rx="5" style="stroke:var(--known)"/>
+      <text class="lbl" x="440" y="202" text-anchor="middle">② 跨 BBB 外排</text>
+      <text class="en"  x="440" y="218" text-anchor="middle">LRP1 efflux · RAGE influx</text>
+      <text class="en"  x="440" y="233" text-anchor="middle">送进血液由外周处理</text>
+
+      <rect class="box" x="600" y="180" width="240" height="62" rx="5" style="stroke:var(--known)"/>
+      <text class="lbl" x="720" y="202" text-anchor="middle">③ 胶质吞噬</text>
+      <text class="en"  x="720" y="218" text-anchor="middle">microglia · astrocyte</text>
+      <text class="en"  x="720" y="233" text-anchor="middle">吞入后送溶酶体降解</text>
+
+      <rect class="box" x="880" y="180" width="280" height="62" rx="5" style="stroke:var(--hypo)"/>
+      <text class="lbl" x="1020" y="202" text-anchor="middle">④ 体液引流</text>
+      <text class="en"  x="1020" y="218" text-anchor="middle">glymphatic · IPAD · lymphatics</text>
+      <text class="en"  x="1020" y="233" text-anchor="middle" style="fill:var(--hypo)">存在是共识，驱动力有争议</text>
+    </svg>
+  </div>
+  <figcaption><b>图 1 · 一条产生线，四条清除线。</b>Aβ 的稳态是"产生速率 − 清除速率"的差。人体同位素标记研究发现，散发性 AD 患者的 Aβ <b>产生速率与对照相近，而清除速率明显更低</b>。<sup><a href="#r3">3</a></sup>这就是本页把四条清除通路而不是分泌酶当主角的原因。</figcaption>
+</figure>
+
+<!-- ============ 产生 vs 清除 ============ -->
+<section>
+<span class="step-no">读图要点 / THE 2×2</span>
+<h2>产生快 ≠ 清除慢</h2>
+<p>家族性与散发性的机制重心不同。把两者混为一谈，是这个领域最常见的叙述错误。</p>
+
+<div class="m22">
+  <div></div>
+  <div class="ch">产生速率正常 normal production</div>
+  <div class="ch">产生速率升高 elevated production</div>
+
+  <div class="rh">清除正常</div>
+  <div class="cell"><b>稳态</b><span>无净沉积</span></div>
+  <div class="cell"><b>家族性 AD 的典型形态</b><span>APP / PSEN 突变改变切割，Aβ42 比例升高</span></div>
+
+  <div class="rh">清除下降</div>
+  <div class="cell target"><b>散发性 AD 的主流形态</b><span>sporadic AD — 本页四条通路讲的就是这一格</span></div>
+  <div class="cell"><b>理论上最差</b><span>两端同时失衡，临床上少见</span></div>
+</div>
+<p style="font-size:13px;color:var(--ink-soft);margin-top:14px">注意：这张表讲的是<b>通路的权重</b>，不是诊断标准。同一个人身上四条清除通路也可能同时打折。</p>
+</section>
+
+<!-- ============ 酶解 ============ -->
+<section>
+<span class="step-no">通路 1 / ENZYMATIC</span>
+<h2>酶解：唯一真正断肽键的清除 <span class="tag tag-k">已验证</span></h2>
+<p>细胞外的<span class="t">肽链内切酶<em>endopeptidase</em></span>直接<span class="t">水解<em>hydrolyze</em></span> Aβ 的<span class="t">肽键<em>peptide bond</em></span>。其中研究最充分的是<span class="t">脑啡肽酶<em>neprilysin, NEP</em></span>与<span class="t">胰岛素降解酶<em>insulin-degrading enzyme, IDE</em></span>。</p>
+
+<div class="eq">Aβ 中的 –CO–NH– &nbsp;+&nbsp; H₂O &nbsp;──[ NEP / IDE ]──▶&nbsp; 更短的肽片段
+<small>示意式。敲低 NEP 会提高小鼠脑内 Aβ 水平，这是"酶解确实承担了一部分清除量"的直接证据。<sup><a href="#r5">5</a></sup></small></div>
+
+<div class="cards">
+  <div class="card known"><h3>IDE 的名字有误导性</h3><p>它降解胰岛素，也降解 Aβ——两者竞争同一个酶。<sup><a href="#r6">6</a></sup>这是"胰岛素抵抗与 AD 相关"的其中一种机制解释，但<b>相关不等于因果</b>。</p></div>
+  <div class="card hypo"><span class="neq">酶活下降 ≠ 酶量下降</span><p>测蛋白量（WB）与测活性（底物切割）是两件事。只报蛋白量变化，不能支持"酶解通路受损"的结论。</p></div>
+</div>
+</section>
+
+<!-- ============ BBB ============ -->
+<section>
+<span class="step-no">通路 2 / BLOOD–BRAIN BARRIER</span>
+<h2>血脑屏障：一条双向通道 <span class="tag tag-k">已验证</span></h2>
+<p>Aβ 可经<span class="t">低密度脂蛋白受体相关蛋白 1<em>LRP1</em></span>从脑向血<span class="t">外排<em>efflux</em></span>，<sup><a href="#r4">4</a></sup>也可经<span class="t">晚期糖基化终产物受体<em>RAGE</em></span>从血向脑<span class="t">内流<em>influx</em></span>。<sup><a href="#r7">7</a></sup>净方向取决于两者的相对活性。</p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 900 272" role="img" aria-label="血脑屏障内皮上 LRP1 介导 Aβ 从脑向血外排，RAGE 介导从血向脑内流，两条方向相反的转运决定净通量" style="min-width:660px">
+      <defs>
+        <marker id="a2k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="a2p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <text class="lbl" x="450" y="20" text-anchor="middle">血脑屏障内皮</text>
+      <text class="en"  x="450" y="34" text-anchor="middle">BBB endothelium</text>
+      <rect x="430" y="42" width="40" height="188" rx="4" fill="var(--surface-2)" stroke="var(--rule)" stroke-width="1.2"/>
+
+      <rect class="box" x="40"  y="66" width="170" height="52" rx="5"/><text class="lbl" x="125" y="88" text-anchor="middle">脑间质液中的 Aβ</text><text class="en" x="125" y="105" text-anchor="middle">Aβ in brain ISF</text>
+      <rect class="box" x="690" y="66" width="170" height="52" rx="5"/><text class="lbl" x="775" y="88" text-anchor="middle">血液 → 外周清除</text><text class="en" x="775" y="105" text-anchor="middle">periphery</text>
+
+      <line class="k" x1="214" y1="92" x2="422" y2="92" marker-end="url(#a2k)"/>
+      <line class="k" x1="478" y1="92" x2="682" y2="92" marker-end="url(#a2k)"/>
+      <text class="arw" x="318" y="60" text-anchor="middle">LRP1 介导外排</text><text class="arwen" x="318" y="73" text-anchor="middle">efflux</text>
+      <text class="arw" x="580" y="60" text-anchor="middle">进入血流</text><text class="arwen" x="580" y="73" text-anchor="middle">into circulation</text>
+
+      <rect class="box" x="690" y="170" width="170" height="52" rx="5"/><text class="lbl" x="775" y="192" text-anchor="middle">血中 Aβ</text><text class="en" x="775" y="209" text-anchor="middle">circulating Aβ</text>
+      <rect class="box" x="40"  y="170" width="170" height="52" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="125" y="192" text-anchor="middle">脑内 Aβ 回升</text><text class="en" x="125" y="209" text-anchor="middle">net influx</text>
+
+      <line class="p" x1="682" y1="196" x2="478" y2="196" marker-end="url(#a2p)"/>
+      <line class="p" x1="422" y1="196" x2="214" y2="196" marker-end="url(#a2p)"/>
+      <text class="arw" x="580" y="164" text-anchor="middle" style="fill:var(--patho)">RAGE 介导内流</text><text class="arwen" x="580" y="151" text-anchor="middle">influx</text>
+      <text class="arw" x="318" y="164" text-anchor="middle" style="fill:var(--patho)">回到脑侧</text><text class="arwen" x="318" y="151" text-anchor="middle">back into brain</text>
+
+      <text class="en" x="450" y="252" text-anchor="middle" style="fill:var(--hypo)">APOE 同工型影响这条通路的效率：APOE4 条件下外排较慢（动物与体外证据）</text>
+      <text class="en" x="450" y="266" text-anchor="middle">apoE isoform–dependent clearance</text>
+    </svg>
+  </div>
+  <figcaption><b>图 2 · 净通量 = 外排 − 内流。</b>只测其中一个方向，无法判断屏障对 Aβ 是"出口"还是"入口"。<span class="t">载脂蛋白 E<em>apolipoprotein E, APOE</em></span>的三种同工型与 Aβ 的清除效率不同，这是 APOE4 成为最强遗传风险因素的机制候选之一。<sup><a href="#r8">8</a></sup></figcaption>
+</figure>
+</section>
+
+<!-- ============ glymphatic ============ -->
+<section>
+<span class="step-no">通路 4 / FLUID DRAINAGE</span>
+<h2>类淋巴与脑膜淋巴：存在是共识，机制仍在争论 <span class="tag tag-h">有争议</span></h2>
+<p>脑没有传统意义上的淋巴管网深入实质，但<span class="t">脑脊液<em>cerebrospinal fluid, CSF</em></span>沿<span class="t">血管周间隙<em>perivascular space</em></span>进入、与<span class="t">脑间质液<em>interstitial fluid, ISF</em></span>交换、再沿引流路径离开，最终可到达<span class="t">脑膜淋巴管<em>meningeal lymphatics</em></span>与<span class="t">颈深淋巴结<em>deep cervical lymph nodes</em></span>。<sup><a href="#r1">1</a></sup><sup><a href="#r9">9</a></sup></p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1200 290" role="img" aria-label="脑脊液经动脉周间隙进入脑实质，与间质液交换后经静脉周路径与脑膜淋巴管引流至颈淋巴结；星形胶质细胞终足 AQP4 的作用与驱动力仍有争议" style="min-width:880px">
+      <defs>
+        <marker id="a3k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="a3h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <text class="en" x="20" y="24" text-anchor="start" style="fill:var(--hypo)">啮齿类中观察到：睡眠期间质间隙体积增大、示踪剂进入更多</text>
+      <text class="en" x="20" y="38" text-anchor="start">sleep-associated increase in interstitial space (rodent)</text>
+
+      <rect class="box" x="20"  y="96" width="160" height="56" rx="5"/><text class="lbl" x="100" y="120" text-anchor="middle">脑脊液</text><text class="en" x="100" y="137" text-anchor="middle">CSF</text>
+      <rect class="box" x="230" y="96" width="180" height="56" rx="5"/><text class="lbl" x="320" y="120" text-anchor="middle">动脉周间隙</text><text class="en" x="320" y="137" text-anchor="middle">periarterial space</text>
+      <rect class="box" x="460" y="96" width="200" height="56" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="560" y="120" text-anchor="middle">脑间质液 + Aβ</text><text class="en" x="560" y="137" text-anchor="middle">ISF solutes</text>
+      <rect class="box" x="710" y="96" width="180" height="56" rx="5"/><text class="lbl" x="800" y="120" text-anchor="middle">静脉周 / 基底膜引流</text><text class="en" x="800" y="137" text-anchor="middle">perivenous · IPAD</text>
+      <rect class="box" x="940" y="96" width="220" height="56" rx="5"/><text class="lbl" x="1050" y="120" text-anchor="middle">脑膜淋巴 → 颈淋巴结</text><text class="en" x="1050" y="137" text-anchor="middle">meningeal → dcLN</text>
+
+      <line class="k" x1="184" y1="124" x2="222" y2="124" marker-end="url(#a3k)"/>
+      <line class="h" x1="414" y1="124" x2="452" y2="124" marker-end="url(#a3h)"/>
+      <line class="h" x1="664" y1="124" x2="702" y2="124" marker-end="url(#a3h)"/>
+      <line class="k" x1="894" y1="124" x2="932" y2="124" marker-end="url(#a3k)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="203" y="76">流入</text><text class="arwen" x="203" y="88">influx</text>
+        <text class="arw" x="433" y="76" style="fill:var(--hypo)">交换</text><text class="arwen" x="433" y="88">exchange</text>
+        <text class="arw" x="683" y="76" style="fill:var(--hypo)">带走溶质</text><text class="arwen" x="683" y="88">clearance</text>
+        <text class="arw" x="913" y="76">引流</text><text class="arwen" x="913" y="88">drainage</text>
+      </g>
+
+      <path class="ghost" d="M320 152 L320 188"/>
+      <text class="lbl" x="320" y="206" text-anchor="middle">终足 AQP4 的极化分布</text>
+      <text class="en"  x="320" y="221" text-anchor="middle">astrocytic endfoot aquaporin-4</text>
+      <text class="en"  x="320" y="237" text-anchor="middle" style="fill:var(--hypo)">敲除后的结果在不同实验室并不一致</text>
+
+      <path class="ghost" d="M800 152 L800 196"/>
+      <rect class="box" x="660" y="200" width="500" height="72" rx="5" style="stroke:var(--hypo)"/>
+      <text class="lbl" x="676" y="224">争议点：是定向对流，还是以扩散为主？</text>
+      <text class="en"  x="676" y="242">convection vs diffusion — both have supporting datasets</text>
+      <text class="en"  x="676" y="260" style="fill:var(--hypo)">示踪剂"进得去"不等于溶质"被带走"</text>
+    </svg>
+  </div>
+  <figcaption><b>图 3 · 这是本库里虚线最多的一张图。</b>血管周间隙存在、脑膜淋巴管存在、示踪剂确实会沿这些路径分布——这些是共识。<b>仍在争论的是驱动力</b>：有研究报告 AQP4 缺失并不改善或改变示踪剂的分子转运，支持以扩散为主；<sup><a href="#r10">10</a></sup>另一些研究在控制麻醉与示踪方式后仍观察到 AQP4 依赖性。<sup><a href="#r11">11</a></sup>画成虚线不是贬低，而是如实标注证据状态。</figcaption>
+</figure>
+
+<div class="cards">
+  <div class="card hypo"><span class="neq">示踪剂入脑 ≠ 溶质出脑</span><p>绝大多数影像研究测的是<b>进入</b>；"清除"是<b>离开</b>。两个方向需要不同的实验设计。</p></div>
+  <div class="card hypo"><span class="neq">睡眠相关 ≠ 睡眠驱动</span><p>啮齿类中睡眠与间隙体积、示踪剂分布相关；<sup><a href="#r2">2</a></sup>推到人类因果需要干预实验，而不是横断面相关。</p></div>
+  <div class="card patho"><h3>失效分支：血管周通路堵塞</h3><p>Aβ 沉积在血管壁即<span class="t">脑淀粉样血管病<em>cerebral amyloid angiopathy, CAA</em></span>——清除通路本身被它要清除的东西堵住，形成正反馈。<sup><a href="#r12">12</a></sup></p></div>
+</div>
+</section>
+
+<!-- ============ 证据表 ============ -->
+<section>
+<span class="step-no">验证 / EVIDENCE</span>
+<h2>想说"清除变慢了"，要拿什么读数</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>要回答的问题</th><th>能回答它的读数</th><th>最常见的误用</th></tr></thead>
+<tbody>
+<tr><td>整体清除速率变了吗？<br><span class="en" style="font-family:var(--term);font-size:11px">fractional clearance rate</span></td>
+    <td>稳定同位素标记动力学（SILK）直接测产生与清除的分数速率<sup><a href="#r3">3</a></sup></td>
+    <td>用 PET 斑块负荷代替速率——那是存量</td></tr>
+<tr><td>是哪条通路出问题？<br><span class="en" style="font-family:var(--term);font-size:11px">pathway attribution</span></td>
+    <td>逐条阻断：抑制 NEP/IDE、封闭 LRP1、清除小胶质、结扎脑膜淋巴管</td>
+    <td>只做相关分析就归因给某一条通路</td></tr>
+<tr><td>体液通路真的带走了溶质吗？<br><span class="en" style="font-family:var(--term);font-size:11px">efflux, not influx</span></td>
+    <td>在实质内注射示踪剂并测其离开速度；同时测颈淋巴结中的到达量</td>
+    <td>只测脑池注射后示踪剂"进得多不多"</td></tr>
+<tr><td>吞噬到底发生没有？<br><span class="en" style="font-family:var(--term);font-size:11px">ingestion vs degradation</span></td>
+    <td>吞入量与溶酶体降解量分开测；阻断溶酶体后应当堆积</td>
+    <td>共定位就当成"已降解"</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note" style="border-left-color:var(--hypo)">
+<strong>读法：</strong>这四行的共同结构是"<b>存量 vs 速率</b>"和"<b>到达 vs 消失</b>"。几乎所有关于 Aβ 清除的过度解读，都可以归到这两条里的一条。
+</div>
+</section>
+
+<!-- ============ 术语表 ============ -->
+<section>
+<span class="step-no">对照表 / GLOSSARY</span>
+<h2>术语中英对照</h2>
+
+<h3 style="margin-top:22px">名词 Nouns</h3>
+<dl class="gloss">
+<div><dt>淀粉样前体蛋白<span>amyloid precursor protein, APP</span></dt><dd>跨膜蛋白，经两次切割产生 Aβ。</dd></div>
+<div><dt>β- 分泌酶<span>BACE1</span></dt><dd>启动淀粉样通路的第一刀。</dd></div>
+<div><dt>γ- 分泌酶<span>γ-secretase</span></dt><dd>含 presenilin 的膜内蛋白酶复合物，决定 Aβ 的长度（如 Aβ40/Aβ42）。</dd></div>
+<div><dt>Aβ42<span>amyloid-β 1-42</span></dt><dd>比 Aβ40 更易聚集的种类，常用其比例作为生物标志物。</dd></div>
+<div><dt>寡聚体<span>oligomer</span></dt><dd>少量 Aβ 分子的可溶性聚集体，通常被认为毒性高于成熟斑块。</dd></div>
+<div><dt>斑块<span>plaque</span></dt><dd>细胞外的致密沉积，是存量指标。</dd></div>
+<div><dt>脑啡肽酶<span>neprilysin, NEP</span></dt><dd>细胞外锌金属肽链内切酶，可降解 Aβ。</dd></div>
+<div><dt>胰岛素降解酶<span>insulin-degrading enzyme, IDE</span></dt><dd>同时降解胰岛素与 Aβ 的酶。</dd></div>
+<div><dt>LRP1<span>LDL receptor–related protein 1</span></dt><dd>介导 Aβ 自脑向血外排的受体。</dd></div>
+<div><dt>RAGE<span>receptor for advanced glycation end products</span></dt><dd>介导 Aβ 自血向脑内流的受体。</dd></div>
+<div><dt>载脂蛋白 E<span>apolipoprotein E, APOE</span></dt><dd>有 ε2/ε3/ε4 三种常见同工型；ε4 是散发性 AD 最强的常见遗传风险因素。</dd></div>
+<div><dt>血管周间隙<span>perivascular space</span></dt><dd>沿血管走行的间隙，体液与溶质可在其中移动。</dd></div>
+<div><dt>类淋巴通路<span>glymphatic pathway</span></dt><dd>CSF 沿动脉周进入、与 ISF 交换、再引流出脑的假说性通路。</dd></div>
+<div><dt>IPAD<span>intramural periarterial drainage</span></dt><dd>沿血管基底膜逆血流方向的引流路径，与类淋巴模型并不完全相同。</dd></div>
+<div><dt>水通道蛋白 4<span>aquaporin-4, AQP4</span></dt><dd>富集于星形胶质细胞终足的水通道；其极化分布在类淋巴模型中被赋予关键角色。</dd></div>
+<div><dt>脑膜淋巴管<span>meningeal lymphatics</span></dt><dd>硬脑膜内的淋巴管，可将 CSF 来源的溶质引流至颈深淋巴结。</dd></div>
+<div><dt>脑淀粉样血管病<span>cerebral amyloid angiopathy, CAA</span></dt><dd>Aβ 沉积于血管壁；既是后果，也会反过来妨碍清除。</dd></div>
+<div><dt>稳定同位素标记动力学<span>SILK</span></dt><dd>用标记氨基酸在体内测蛋白的产生与清除速率。</dd></div>
+<div><dt>分数清除速率<span>fractional clearance rate</span></dt><dd>单位时间清除掉的比例，是速率指标而非存量指标。</dd></div>
+<div><dt>小胶质细胞<span>microglia</span></dt><dd>脑内常驻免疫细胞，可吞噬 Aβ（见<a href="../microglial-phagocytosis/index.html">小胶质细胞专题</a>）。</dd></div>
+</dl>
+
+<h3 style="margin-top:30px">动词 Verbs</h3>
+<dl class="gloss">
+<div><dt>切割<span>cleave</span></dt><dd>断开肽键；本页中指分泌酶对 APP 的加工。</dd></div>
+<div><dt>聚集<span>aggregate</span></dt><dd>分子间通过非共价接触形成更大的集合体。</dd></div>
+<div><dt>水解<span>hydrolyze</span></dt><dd>以水参与断开共价键；酶解通路的核心化学步骤。</dd></div>
+<div><dt>外排<span>efflux</span></dt><dd>从脑侧运到血侧。</dd></div>
+<div><dt>内流<span>influx</span></dt><dd>从血侧运回脑侧，与外排方向相反。</dd></div>
+<div><dt>吞噬<span>phagocytose</span></dt><dd>细胞把胞外物质整体吞入。</dd></div>
+<div><dt>引流<span>drain</span></dt><dd>体液连同溶质沿通路离开某一区域。</dd></div>
+<div><dt>对流<span>convect</span></dt><dd>靠体液定向流动带动溶质移动。</dd></div>
+<div><dt>扩散<span>diffuse</span></dt><dd>靠浓度梯度自发移动，不需要定向流动。</dd></div>
+<div><dt>示踪<span>trace</span></dt><dd>用可检测分子标记通路；注意它测的是分布而非清除。</dd></div>
+<div><dt>阻断<span>block</span></dt><dd>实验手段：关掉一条通路，看效果是否随之改变。</dd></div>
+<div><dt>归因<span>attribute</span></dt><dd>把观察到的变化指派给某条具体通路；需要阻断实验而非相关分析。</dd></div>
+</dl>
+</section>
+
+<!-- ============ 结论 ============ -->
+<section>
+<span class="step-no">结论 / BOTTOM LINE</span>
+<h2>核心结论</h2>
+<div class="cards">
+  <div class="card known"><h3>① 清除端比产生端更可能是散发性病理的重心</h3><p>同位素动力学数据支持这一点；但"哪条通路"仍未有定论。</p></div>
+  <div class="card hypo"><h3>② 四条通路互相代偿</h3><p>单独敲掉一条往往只看到部分效应，这使得归因实验必须成组设计。</p></div>
+  <div class="card hypo"><h3>③ 类淋巴通路：画虚线不是否定</h3><p>解剖结构有共识，驱动力无共识。叙述时把两层分开，才站得住。</p></div>
+</div>
+
+<ol class="refs">
+<li id="r1">Iliff JJ 等，2012，<i>Science Translational Medicine</i>：血管周通路促进 CSF 穿过脑实质并清除包括 Aβ 在内的间质溶质 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=A+paravascular+pathway+facilitates+CSF+flow+through+the+brain+parenchyma">PubMed 检索</a></li>
+<li id="r2">Xie L 等，2013，<i>Science</i>：睡眠驱动成年脑的代谢物清除 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Sleep+drives+metabolite+clearance+from+the+adult+brain">PubMed 检索</a></li>
+<li id="r3">Mawuenyega KG 等，2010，<i>Science</i>：阿尔茨海默病中中枢 Aβ 清除速率下降 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Decreased+clearance+of+CNS+beta-amyloid+in+Alzheimer%27s+disease">PubMed 检索</a></li>
+<li id="r4">Shibata M 等，2000，<i>J Clin Invest</i>：LRP1 介导 Aβ(1-40) 经血脑屏障的清除 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Clearance+of+Alzheimer%27s+amyloid+peptide+from+brain+by+LDL+receptor-related+protein-1">PubMed 检索</a></li>
+<li id="r5">Iwata N 等，2001，<i>Science</i>：脑内 Aβ 的代谢受 neprilysin 调节 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Metabolic+regulation+of+brain+Abeta+by+neprilysin">PubMed 检索</a></li>
+<li id="r6">Farris W 等，2003，<i>PNAS</i>：IDE 在体内调节胰岛素与 Aβ 水平 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Insulin-degrading+enzyme+regulates+the+levels+of+insulin+amyloid+beta-protein">PubMed 检索</a></li>
+<li id="r7">Deane R 等，2003，<i>Nature Medicine</i>：RAGE 介导 Aβ 跨血脑屏障转运与脑内蓄积 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=RAGE+mediates+amyloid-beta+peptide+transport+across+the+blood-brain+barrier">PubMed 检索</a></li>
+<li id="r8">Castellano JM 等，2011，<i>Science Translational Medicine</i>：人 apoE 同工型差异性调节脑内 Aβ 清除 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Human+apoE+isoforms+differentially+regulate+brain+amyloid+clearance">PubMed 检索</a></li>
+<li id="r9">Louveau A 等，2015，<i>Nature</i>：中枢神经系统淋巴管的结构与功能特征 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Structural+and+functional+features+of+central+nervous+system+lymphatic+vessels">PubMed 检索</a></li>
+<li id="r10">Smith AJ 等，2017，<i>eLife</i>：对类淋巴假说的检验——AQP4 缺失并未改善扩散性分子转运 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Test+of+the+glymphatic+hypothesis+demonstrates+diffusive+molecular+transport">PubMed 检索</a></li>
+<li id="r11">Mestre H 等，2018，<i>Nature Communications</i>：啮齿类脑中 AQP4 依赖的类淋巴溶质转运 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Aquaporin-4-dependent+glymphatic+solute+transport+in+the+rodent+brain">PubMed 检索</a></li>
+<li id="r12">Carare RO 等，2008，<i>Neuropathol Appl Neurobiol</i>：溶质沿脑动脉基底膜的引流及其与淀粉样血管病的关系 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Solutes+but+not+cells+drain+from+the+brain+parenchyma+along+basement+membranes">PubMed 检索</a></li>
+</ol>
+</section>
+
+<footer>
+本页为机制讲解与读图训练，用于把"已验证／有争议／会失效"三层分开，不构成临床建议或个体化医学意见。参考条目以标题给出并链接到 PubMed 检索，便于核对原文。
+</footer>
+
+
+</div>
+
+</body>
+</html>

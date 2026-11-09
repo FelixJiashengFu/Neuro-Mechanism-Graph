@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="TDP-43 病理的两张面孔：核内功能丧失与胞质聚集。含自调控负反馈、隐蔽外显子（STMN2 / UNC13A）证据链与相分离争议，术语附中英对照，可离线打开。">
+<title>TDP-43 机制图解｜核丢失 · 自调控 · 隐蔽外显子 · 胞质聚集</title>
+<style>
+:root{
+  --paper:#f6f8fa;
+  --surface:#ffffff;
+  --surface-2:#eef2f6;
+  --ink:#161b22;
+  --ink-soft:#5b6673;
+  --rule:#d6dce4;
+  --known:#0f6b70;        /* 已验证的通用生物学 */
+  --known-wash:#e2f0f0;
+  --hypo:#8f5300;         /* 待检验的假设 */
+  --hypo-wash:#faecd8;
+  --patho:#962b64;        /* 病理物种 / 失效分支 */
+  --patho-wash:#f8e5ee;
+  --display:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Times New Roman",Georgia,serif;
+  --body:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --term:ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+.backnav{font-family:var(--term);font-size:11px;letter-spacing:.1em;margin-bottom:20px}
+.backnav a{color:var(--ink-soft);text-decoration:none}
+.backnav a:hover{color:var(--known)}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.75;margin:0;
+     -webkit-font-smoothing:antialiased;font-size:15px}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:40px 64px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);letter-spacing:-.01em}
+h2{font-size:clamp(19px,3.6vw,25px)}
+h3{font-size:16px}
+p{margin:.7em 0}
+a{color:var(--known);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--hypo);outline-offset:2px;border-radius:2px}
+.eyebrow{font-family:var(--term);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.lede{font-size:17px;color:var(--ink-soft);max-width:62ch}
+.t em{font-family:var(--term);font-style:normal;font-size:.76em;color:var(--ink-soft);letter-spacing:.01em;padding-left:.35em}
+sup a{font-family:var(--term);font-size:10px;text-decoration:none;padding:0 1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:8px;font-size:12.5px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:999px;padding:5px 13px 5px 10px}
+.swatch{width:26px;height:0;border-top-width:2.5px;flex:none}
+.sw-k{border-top-style:solid;border-top-color:var(--known)}
+.sw-h{border-top-style:dashed;border-top-color:var(--hypo)}
+.sw-p{border-top-style:dashed;border-top-color:var(--patho)}
+.note{background:var(--surface-2);border-left:3px solid var(--rule);padding:14px 18px;margin:28px 0;font-size:13.5px;color:var(--ink-soft)}
+.note strong{color:var(--ink)}
+section{margin-top:52px;padding-top:28px;border-top:1px solid var(--rule)}
+.step-no{font-family:var(--term);font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft);display:block;margin-bottom:6px}
+.tag{font-family:var(--term);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:4px;white-space:nowrap;display:inline-block;vertical-align:2px}
+.tag-k{background:var(--known-wash);color:var(--known)}
+.tag-h{background:var(--hypo-wash);color:var(--hypo)}
+.tag-p{background:var(--patho-wash);color:var(--patho)}
+figure{margin:26px 0 0}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px}
+.scroll svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--ink-soft);margin-top:10px;max-width:70ch}
+svg text{fill:currentColor}
+svg .lbl{font-family:var(--body);font-weight:500;font-size:13px}
+svg .en{font-family:var(--term);font-size:9.5px;fill:var(--ink-soft)}
+svg .arw{font-family:var(--body);font-weight:500;font-size:11px}
+svg .arwen{font-family:var(--term);font-size:9px;fill:var(--ink-soft)}
+svg .box{fill:var(--surface);stroke:var(--rule);stroke-width:1.2}
+svg .k{stroke:var(--known);fill:none;stroke-width:1.7}
+svg .h{stroke:var(--hypo);fill:none;stroke-width:1.7;stroke-dasharray:6 4}
+svg .hb{stroke:var(--hypo);fill:none;stroke-width:3;stroke-dasharray:7 4}
+svg .p{stroke:var(--patho);fill:none;stroke-width:1.7;stroke-dasharray:4 4}
+svg .mk-k{fill:var(--known)}
+svg .mk-h{fill:var(--hypo)}
+svg .mk-p{fill:var(--patho)}
+svg .tau{fill:var(--patho-wash);stroke:var(--patho);stroke-width:1.3}
+svg .pep{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.1}
+svg .seg-a{fill:var(--known-wash);stroke:var(--known);stroke-width:1.3}
+svg .seg-b{fill:var(--hypo-wash);stroke:var(--hypo);stroke-width:1.3}
+svg .seg-c{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.3}
+svg .ghost{fill:none;stroke:var(--ink-soft);stroke-width:1.1;stroke-dasharray:3 3}
+.eq{font-family:var(--term);font-size:13px;background:var(--surface);border:1px solid var(--rule);
+    border-left:3px solid var(--known);border-radius:4px;padding:12px 16px;margin:18px 0;overflow-x:auto;white-space:nowrap}
+.eq small{display:block;white-space:normal;font-family:var(--body);font-size:12px;color:var(--ink-soft);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;min-width:0}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;margin:.4em 0 0;color:var(--ink-soft)}
+.card.hypo{border-left:3px solid var(--hypo)}
+.card.known{border-left:3px solid var(--known)}
+.card.patho{border-left:3px solid var(--patho)}
+.neq{font-family:var(--term);font-size:14.5px;color:var(--ink);display:block;margin-bottom:4px;word-break:break-word}
+.m22{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;margin-top:22px;font-size:13px;min-width:0}
+.m22 .rh,.m22 .ch{font-family:var(--term);font-size:11px;letter-spacing:.04em;color:var(--ink-soft);align-self:center}
+.m22 .cell{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:12px 14px;min-width:0}
+.m22 .cell b{display:block;font-weight:500;font-size:13.5px}
+.m22 .cell span{color:var(--ink-soft);font-size:12.5px}
+.m22 .target{border:1.5px solid var(--hypo);background:var(--hypo-wash)}
+.tablewrap{overflow-x:auto;margin-top:22px;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:13.5px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--term);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+td:first-child{font-weight:500}
+.mark{font-family:var(--term);font-size:14px;font-variant-numeric:tabular-nums}
+.yes{color:var(--known)}
+.no{color:var(--patho)}
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 28px;margin:18px 0 0}
+dl.gloss>div{border-bottom:1px solid var(--rule);padding:11px 0;min-width:0}
+dt{font-weight:500;font-size:14px}
+dt span{font-family:var(--term);font-size:11.5px;color:var(--ink-soft);padding-left:.5em}
+dd{margin:3px 0 0;font-size:13px;color:var(--ink-soft)}
+ol.refs{font-size:12.5px;color:var(--ink-soft);padding-left:22px;margin-top:18px}
+ol.refs li{margin:7px 0;word-break:break-word}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="backnav"><a href="../../index.html">&#8592; 返回目录 / INDEX</a></nav>
+
+
+<p class="eyebrow">Topic 04 · TDP-43：核丢失与胞质聚集</p>
+<h1>TDP-43 的病理有两张面孔，别只画其中一张</h1>
+<p class="lede">几乎所有肌萎缩侧索硬化、约一半额颞叶变性，以及相当比例的老年脑，都带有 TDP-43 病理。它的特征不是"多了一团聚集物"，而是<b>同时发生的两件事</b>：细胞核里本该在的 TDP-43 不见了，细胞质里出现了磷酸化、泛素化的聚集物。本页把这两面分开画，再说明近年最硬的那条证据链——<b>隐蔽外显子</b>。</p>
+
+<ul class="legend">
+  <li><span class="swatch sw-k"></span>已验证的通用生物学 <span class="t"><em>established</em></span></li>
+  <li><span class="swatch sw-h"></span>有支持但仍待检验 <span class="t"><em>to be tested</em></span></li>
+  <li><span class="swatch sw-p"></span>病理分支 <span class="t"><em>pathological branch</em></span></li>
+</ul>
+
+<div class="note">
+<strong>一句话定位：</strong>TDP-43 是<b>核内 RNA 结合蛋白</b>，日常工作是剪接调控、转录调控与 RNA 稳定性维持。<sup><a href="#r3">3</a></sup>所以"它从核里消失"本身就是一次功能事故，不必等到聚集物显形。
+</div>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1150 300" role="img" aria-label="TDP-43 常态位于细胞核执行剪接与自调控；病理下分为核内功能丧失与胞质聚集获得毒性两条分支" style="min-width:860px">
+      <defs>
+        <marker id="c1h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="c1p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="360" y="20" width="430" height="96" rx="10" style="stroke:var(--known);stroke-width:2"/>
+      <text class="lbl" x="575" y="48" text-anchor="middle">细胞核：TDP-43 的常态岗位</text>
+      <text class="en"  x="575" y="68" text-anchor="middle">splicing · transcription · RNA stability</text>
+      <text class="en"  x="575" y="88" text-anchor="middle">并通过结合自身 3′UTR 控制自己的丰度</text>
+      <text class="en"  x="575" y="106" text-anchor="middle" style="fill:var(--known)">这是"正常"，下面两格才是病理</text>
+
+      <path class="h" d="M470 118 C420 142 300 152 290 174" marker-end="url(#c1h)"/>
+      <path class="p" d="M680 118 C730 142 850 152 860 174" marker-end="url(#c1p)"/>
+
+      <rect class="box" x="60" y="180" width="460" height="110" rx="5" style="stroke:var(--hypo)"/>
+      <text class="lbl" x="76" y="206">① 核内功能丧失</text>
+      <text class="en"  x="76" y="224">loss of nuclear function</text>
+      <text class="en"  x="76" y="244">剪接去抑制 → 隐蔽外显子被错误纳入</text>
+      <text class="en"  x="76" y="262">自调控闭环断开 → 自身水平失控</text>
+      <text class="en"  x="76" y="280" style="fill:var(--hypo)">靶基因如 STMN2 / UNC13A 表达下降</text>
+
+      <rect class="box" x="620" y="180" width="470" height="110" rx="5" style="stroke:var(--patho)"/>
+      <text class="lbl" x="636" y="206">② 胞质聚集，获得毒性</text>
+      <text class="en"  x="636" y="224">gain of cytoplasmic toxicity</text>
+      <text class="en"  x="636" y="244">磷酸化（S409/410）、泛素化、C 端片段化</text>
+      <text class="en"  x="636" y="262">干扰核质转运与 RNA 代谢，可能形成恶性循环</text>
+      <text class="en"  x="636" y="280" style="fill:var(--patho)">两格可以同时成立，也可能互为因果</text>
+    </svg>
+  </div>
+  <figcaption><b>图 1 · 把"丢失"与"聚集"分开记。</b>泛素化的 TDP-43 被鉴定为额颞叶变性与肌萎缩侧索硬化包涵体的主要成分，<sup><a href="#r1">1</a></sup>随后在 TARDBP 中发现致病突变，确认它不只是旁观者。<sup><a href="#r2">2</a></sup>但聚集物的体积与神经元死亡并不总是对应——这正是"功能丧失"一侧近年被看重的原因。</figcaption>
+</figure>
+
+<!-- ============ 自调控 ============ -->
+<section>
+<span class="step-no">机制 1 / AUTOREGULATION</span>
+<h2>自调控：一个会被自己打断的闭环 <span class="tag tag-k">已验证</span></h2>
+<p>TDP-43 蛋白会结合自身 mRNA 的 3′ 非翻译区，促使其被降解或发生非生产性剪接，从而把自己的量压回去。<sup><a href="#r4">4</a></sup>这是一个标准的<span class="t">负反馈<em>negative feedback</em></span>。</p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 900 252" role="img" aria-label="TDP-43 蛋白结合自身 3 撇 UTR 使自身 mRNA 下降，构成负反馈闭环；当蛋白离开细胞核时闭环断开" style="min-width:680px">
+      <defs>
+        <marker id="c2k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="40"  y="60" width="220" height="60" rx="5" style="stroke:var(--known)"/><text class="lbl" x="150" y="86" text-anchor="middle">核内 TDP-43 蛋白</text><text class="en" x="150" y="104" text-anchor="middle">nuclear TDP-43</text>
+      <rect class="box" x="330" y="60" width="240" height="60" rx="5"/><text class="lbl" x="450" y="86" text-anchor="middle">结合自身 3′UTR</text><text class="en" x="450" y="104" text-anchor="middle">binds its own transcript</text>
+      <rect class="box" x="640" y="60" width="220" height="60" rx="5"/><text class="lbl" x="750" y="86" text-anchor="middle">自身 mRNA 下降</text><text class="en" x="750" y="104" text-anchor="middle">TARDBP mRNA ↓</text>
+
+      <line class="k" x1="264" y1="90" x2="322" y2="90" marker-end="url(#c2k)"/>
+      <line class="k" x1="574" y1="90" x2="632" y2="90" marker-end="url(#c2k)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="293" y="40">识别</text><text class="arwen" x="293" y="52">recognize</text>
+        <text class="arw" x="603" y="40">降解 / 改变剪接</text><text class="arwen" x="603" y="52">degrade · alter splicing</text>
+      </g>
+
+      <path class="k" d="M750 124 C750 206 150 206 150 126" marker-end="url(#c2k)"/>
+      <text class="lbl" x="450" y="166" text-anchor="middle">闭环：蛋白多一点，自己就少产一点</text>
+      <text class="en"  x="450" y="182" text-anchor="middle">a self-limiting loop that keeps TDP-43 in a narrow range</text>
+
+      <text class="lbl" x="450" y="226" text-anchor="middle" style="fill:var(--patho)">一旦 TDP-43 离开细胞核，这个闭环就断开</text>
+      <text class="en"  x="450" y="242" text-anchor="middle">loss from the nucleus removes the brake, not just the function</text>
+    </svg>
+  </div>
+  <figcaption><b>图 2 · 为什么"核丢失"比"少了一个剪接因子"更糟。</b>它同时拿掉了<b>功能</b>与<b>刹车</b>。这也解释了实验设计上的一个陷阱：单纯过表达 TDP-43 会立刻触发自调控，得到的表型未必能代表病理状态——敲低与过表达必须各自设对照。</figcaption>
+</figure>
+</section>
+
+<!-- ============ 隐蔽外显子 ============ -->
+<section>
+<span class="step-no">机制 2 / CRYPTIC EXONS</span>
+<h2>隐蔽外显子：近年最硬的一条因果链 <span class="tag tag-k">多组独立重复</span></h2>
+<p>基因组里有许多<span class="t">隐蔽外显子<em>cryptic exon</em></span>——平时被压着、不参与成熟 mRNA 的序列。TDP-43 的工作之一就是压住它们。<sup><a href="#r6">6</a></sup>TDP-43 一旦离开核，这些序列被错误纳入，使转录本提前终止或被降解。</p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1000 300" role="img" aria-label="正常时 TDP-43 抑制隐蔽外显子使成熟 mRNA 正常；TDP-43 核丢失后隐蔽外显子被纳入导致提前终止或提前多聚腺苷酸化，靶蛋白减少" style="min-width:760px">
+      <defs>
+        <marker id="c3k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="c3p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <!-- row A -->
+      <rect class="seg-a" x="60"  y="56" width="100" height="26" rx="4"/><text class="en" x="110" y="98" text-anchor="middle">外显子 1</text>
+      <line class="ghost" x1="160" y1="69" x2="260" y2="69"/>
+      <rect x="260" y="56" width="100" height="26" rx="4" fill="none" stroke="var(--ink-soft)" stroke-width="1.2" stroke-dasharray="4 3"/><text class="en" x="310" y="98" text-anchor="middle">隐蔽外显子（被压住）</text>
+      <line class="ghost" x1="360" y1="69" x2="460" y2="69"/>
+      <rect class="seg-a" x="460" y="56" width="100" height="26" rx="4"/><text class="en" x="510" y="98" text-anchor="middle">外显子 2</text>
+      <circle cx="310" cy="32" r="11" fill="var(--known-wash)" stroke="var(--known)" stroke-width="1.6"/>
+      <text class="en" x="330" y="28" text-anchor="start" style="fill:var(--known)">TDP-43 在位，抑制其被纳入</text>
+      <text class="en" x="330" y="42" text-anchor="start">repression of cryptic splicing</text>
+
+      <line class="k" x1="580" y1="69" x2="628" y2="69" marker-end="url(#c3k)"/>
+      <rect class="box" x="636" y="44" width="334" height="56" rx="5" style="stroke:var(--known)"/>
+      <text class="lbl" x="652" y="68">成熟 mRNA：外显子 1 – 外显子 2</text>
+      <text class="en"  x="652" y="86">normal transcript → 全长蛋白</text>
+      <text class="en"  x="652" y="118" style="fill:var(--known)">例：STMN2、UNC13A 正常表达</text>
+
+      <line x1="40" y1="142" x2="960" y2="142" stroke="var(--rule)" stroke-width="1"/>
+
+      <!-- row B -->
+      <text class="lbl" x="310" y="166" text-anchor="middle" style="fill:var(--patho)">核内 TDP-43 缺失</text>
+      <rect class="seg-a" x="60"  y="186" width="100" height="26" rx="4"/><text class="en" x="110" y="228" text-anchor="middle">外显子 1</text>
+      <line class="ghost" x1="160" y1="199" x2="260" y2="199"/>
+      <rect class="tau" x="260" y="186" width="100" height="26" rx="4"/><text class="en" x="310" y="228" text-anchor="middle" style="fill:var(--patho)">隐蔽外显子被纳入</text>
+      <line class="ghost" x1="360" y1="199" x2="460" y2="199"/>
+      <rect class="seg-a" x="460" y="186" width="100" height="26" rx="4"/><text class="en" x="510" y="228" text-anchor="middle">外显子 2</text>
+
+      <line class="p" x1="580" y1="199" x2="628" y2="199" marker-end="url(#c3p)"/>
+      <rect class="box" x="636" y="170" width="334" height="76" rx="5" style="stroke:var(--patho)"/>
+      <text class="lbl" x="652" y="194">提前终止 / 提前多聚腺苷酸化</text>
+      <text class="en"  x="652" y="212">premature termination · premature polyadenylation</text>
+      <text class="en"  x="652" y="232">转录本被降解，或翻译出截短产物</text>
+      <text class="en"  x="652" y="266" style="fill:var(--patho)">→ STMN2 / UNC13A 蛋白水平下降</text>
+
+      <text class="en" x="300" y="268" text-anchor="middle">这条链可以用 RT-PCR 直接读出，</text>
+      <text class="en" x="300" y="284" text-anchor="middle">并已成为疾病标志物与治疗靶点的来源</text>
+    </svg>
+  </div>
+  <figcaption><b>图 3 · 一个可检测、可干预的中间环节。</b>TDP-43 功能丧失会导致 <span class="t"><em>STMN2</em></span> 因提前多聚腺苷酸化而截短，<sup><a href="#r7">7</a></sup><sup><a href="#r8">8</a></sup>并使 <span class="t"><em>UNC13A</em></span> 纳入隐蔽外显子而表达下降；后者还与该基因上早已报告的 ALS 风险位点在同一区域，把<b>遗传关联</b>与<b>分子机制</b>接上了。<sup><a href="#r9">9</a></sup><sup><a href="#r10">10</a></sup></figcaption>
+</figure>
+
+<div class="cards">
+  <div class="card known"><h3>为什么这条链说服力强</h3><p>它同时满足三项：有可测的中间产物、有独立实验室重复、并与人类遗传学结果吻合。神经退行领域能同时满足这三项的机制并不多。</p></div>
+  <div class="card hypo"><span class="neq">隐蔽外显子出现 ≠ 它造成了死亡</span><p>它是 TDP-43 失能的<b>忠实读数</b>；要证明它本身致病，还得单独补回 STMN2 / UNC13A 看表型是否挽回。</p></div>
+</div>
+</section>
+
+<!-- ============ 相分离与应激颗粒 ============ -->
+<section>
+<span class="step-no">机制 3 / PHASE SEPARATION</span>
+<h2>相分离与应激颗粒：路径之一，未必是必经之路 <span class="tag tag-h">有争议</span></h2>
+<p>TDP-43 的 C 端<span class="t">低复杂度结构域<em>low-complexity domain, LCD</em></span>可驱动<span class="t">液—液相分离<em>liquid–liquid phase separation</em></span>，形成无膜的浓缩相；这类液滴在持续应激下可发生<span class="t">液固转变<em>liquid-to-solid transition</em></span>并走向纤维化。<sup><a href="#r11">11</a></sup>一个流行的叙述是：应激颗粒 → 成熟 → 变成病理包涵体。</p>
+
+<div class="cards">
+  <div class="card hypo"><h3>支持面</h3><p>LCD 突变会改变相行为，并与家族性病例的突变位置重叠；体外可重现从液滴到纤维的过程。</p></div>
+  <div class="card patho"><h3>反例</h3><p>也有研究观察到<b>不依赖应激颗粒</b>的胞质 TDP-43 去混合过程，并伴随核输入受损——说明应激颗粒可能是旁路而非必经站。<sup><a href="#r13">13</a></sup></p></div>
+  <div class="card hypo"><span class="neq">在体外会相分离 ≠ 在细胞里走这条路</span><p>体外体系的蛋白浓度与拥挤剂通常远离生理条件。把体外相图直接当成细胞内机制，是这一小节最常见的跳步。</p></div>
+</div>
+
+<div class="note">
+<strong>还有一层：核质转运本身。</strong>有工作报告 TDP-43 病理与<span class="t">核孔复合体<em>nuclear pore complex</em></span>及转运因子的异常相互强化。<sup><a href="#r14">14</a></sup>若成立，"核丢失"与"胞质聚集"就不是两条平行线，而是一个闭合的恶性循环——这也是图 1 里那句"可能互为因果"的出处。
+</div>
+</section>
+
+<!-- ============ 分布 ============ -->
+<section>
+<span class="step-no">流行面 / WHERE IT SHOWS UP</span>
+<h2>不是只有 ALS 才有 TDP-43 病理</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>疾病情境</th><th>TDP-43 病理的角色</th><th>要注意的事</th></tr></thead>
+<tbody>
+<tr><td>肌萎缩侧索硬化 <span class="t"><em>ALS</em></span></td><td>绝大多数病例可见；是该病最一致的病理共同点</td><td>SOD1 与 FUS 相关病例通常例外，不应一概而论</td></tr>
+<tr><td>额颞叶变性 <span class="t"><em>FTLD-TDP</em></span></td><td>约一半病例的主要包涵体成分<sup><a href="#r1">1</a></sup></td><td>另一大类是 tau 病理，两者临床表现可重叠</td></tr>
+<tr><td>LATE <span class="t"><em>limbic-predominant age-related TDP-43 encephalopathy</em></span></td><td>高龄人群中常见，临床可近似遗忘型痴呆<sup><a href="#r12">12</a></sup></td><td>容易被当作阿尔茨海默病；两者也常共存</td></tr>
+<tr><td>与 AD 共病</td><td>相当比例的 AD 尸检脑同时带有 TDP-43 病理</td><td>共病会影响临床—病理对应关系的解读</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ============ 验证 ============ -->
+<section>
+<span class="step-no">验证 / EVIDENCE</span>
+<h2>想说"TDP-43 失能"，拿什么读数</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>要回答的问题</th><th>合适的读数</th><th>常见误用</th></tr></thead>
+<tbody>
+<tr><td>核里真的少了吗？</td><td>核／胞质分别定量，而不是只看总量；单细胞水平比群体平均更有意义</td><td>WB 总蛋白量不变就断定"没变化"</td></tr>
+<tr><td>功能真的丢了吗？</td><td>隐蔽外显子纳入的 RT-PCR / 测序读数——这是功能的直接指标</td><td>只做聚集物染色，不测下游剪接</td></tr>
+<tr><td>聚集物有没有毒？</td><td>把聚集与功能丧失解耦：如保留核功能而强制胞质聚集</td><td>把包涵体数量当作疾病严重度的代名词</td></tr>
+<tr><td>干预有效吗？</td><td>补回下游靶点（如 STMN2）看表型是否部分挽回</td><td>只看 TDP-43 总量下降就宣称有效</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- ============ 术语表 ============ -->
+<section>
+<span class="step-no">对照表 / GLOSSARY</span>
+<h2>术语中英对照</h2>
+
+<h3 style="margin-top:22px">名词 Nouns</h3>
+<dl class="gloss">
+<div><dt>TDP-43<span>TAR DNA-binding protein 43 kDa</span></dt><dd>由 TARDBP 编码的核内 RNA 结合蛋白。</dd></div>
+<div><dt>RNA 结合蛋白<span>RNA-binding protein</span></dt><dd>与 RNA 结合并调控其剪接、运输、稳定性的蛋白。</dd></div>
+<div><dt>剪接<span>splicing</span></dt><dd>把 pre-mRNA 中的内含子去掉、外显子连接起来的过程。</dd></div>
+<div><dt>隐蔽外显子<span>cryptic exon</span></dt><dd>平时被压制、不进入成熟 mRNA 的序列；TDP-43 是主要压制者之一。</dd></div>
+<div><dt>3′ 非翻译区<span>3′ untranslated region, 3′UTR</span></dt><dd>mRNA 末端不编码蛋白的一段，常是调控元件所在。</dd></div>
+<div><dt>自调控<span>autoregulation</span></dt><dd>蛋白调节自身转录本水平的负反馈。</dd></div>
+<div><dt>提前多聚腺苷酸化<span>premature polyadenylation</span></dt><dd>转录本在正常终止点之前被加尾，产生截短产物。</dd></div>
+<div><dt>STMN2<span>stathmin-2</span></dt><dd>参与轴突生长与修复的蛋白，其转录本对 TDP-43 功能高度敏感。</dd></div>
+<div><dt>UNC13A<span>UNC13A</span></dt><dd>突触蛋白基因，其隐蔽外显子与 ALS 风险位点处于同一区域。</dd></div>
+<div><dt>低复杂度结构域<span>low-complexity domain, LCD</span></dt><dd>氨基酸种类单调的区段，常驱动相分离。</dd></div>
+<div><dt>液—液相分离<span>liquid–liquid phase separation</span></dt><dd>形成无膜浓缩相的过程。</dd></div>
+<div><dt>应激颗粒<span>stress granule</span></dt><dd>应激时形成的 RNA–蛋白凝聚体。</dd></div>
+<div><dt>液固转变<span>liquid-to-solid transition</span></dt><dd>液滴随时间变硬并趋向纤维化。</dd></div>
+<div><dt>核孔复合体<span>nuclear pore complex</span></dt><dd>控制核质物质往返的通道结构。</dd></div>
+<div><dt>C 端片段<span>C-terminal fragment, CTF</span></dt><dd>TDP-43 被切割后的片段，常见于病理包涵体。</dd></div>
+<div><dt>泛素化<span>ubiquitination</span></dt><dd>加上泛素标签；病理 TDP-43 的典型修饰之一。</dd></div>
+<div><dt>LATE<span>limbic-predominant age-related TDP-43 encephalopathy</span></dt><dd>以边缘系统为主的老年相关 TDP-43 脑病。<sup><a href="#r12">12</a></sup></dd></div>
+<div><dt>额颞叶变性<span>frontotemporal lobar degeneration, FTLD</span></dt><dd>一组以额颞叶受累为主的变性病，按包涵体成分再分型。</dd></div>
+</dl>
+
+<h3 style="margin-top:30px">动词 Verbs</h3>
+<dl class="gloss">
+<div><dt>抑制纳入<span>repress inclusion</span></dt><dd>阻止某段序列进入成熟 mRNA。</dd></div>
+<div><dt>去抑制<span>de-repress</span></dt><dd>压制解除，被压的序列开始出现。</dd></div>
+<div><dt>错误剪接<span>mis-splice</span></dt><dd>剪接选择出错，产生异常转录本。</dd></div>
+<div><dt>截短<span>truncate</span></dt><dd>产物比全长短；可能失去功能。</dd></div>
+<div><dt>降解<span>degrade</span></dt><dd>转录本或蛋白被分解。</dd></div>
+<div><dt>错定位<span>mislocalize</span></dt><dd>蛋白出现在不该在的区室，本页中指从核到胞质。</dd></div>
+<div><dt>相分离<span>phase-separate</span></dt><dd>从均一溶液中分出浓缩相。</dd></div>
+<div><dt>去混合<span>de-mix</span></dt><dd>相分离的另一种说法，强调组分分开。</dd></div>
+<div><dt>磷酸化<span>phosphorylate</span></dt><dd>加磷酸基；S409/410 磷酸化是病理 TDP-43 的常用标记。</dd></div>
+<div><dt>敲低<span>knock down</span></dt><dd>降低表达，用于检验功能丧失假说。</dd></div>
+<div><dt>解耦<span>decouple</span></dt><dd>把两个常同时发生的变量分开，以判断哪一个在起作用。</dd></div>
+<div><dt>挽回<span>rescue</span></dt><dd>补回下游成分后表型恢复，是因果关系的强证据。</dd></div>
+</dl>
+</section>
+
+<!-- ============ 结论 ============ -->
+<section>
+<span class="step-no">结论 / BOTTOM LINE</span>
+<h2>核心结论</h2>
+<div class="cards">
+  <div class="card known"><h3>① 两面并存</h3><p>核丢失与胞质聚集都要画；只画包涵体会漏掉最可干预的一半。</p></div>
+  <div class="card known"><h3>② 隐蔽外显子是最好的功能读数</h3><p>可测、可重复、与人类遗传学吻合。</p></div>
+  <div class="card hypo"><h3>③ 相分离：机制候选，非定论</h3><p>应激颗粒未必是必经中间体；体外相图不能直接当细胞内路径。</p></div>
+  <div class="card hypo"><h3>④ 自调控是实验设计的坑</h3><p>过表达会触发负反馈，敲低与过表达必须各设对照。</p></div>
+</div>
+
+<ol class="refs">
+<li id="r1">Neumann M 等，2006，<i>Science</i>：FTLD 与 ALS 中泛素化的 TDP-43 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Ubiquitinated+TDP-43+in+frontotemporal+lobar+degeneration+and+amyotrophic+lateral+sclerosis">PubMed 检索</a></li>
+<li id="r2">Sreedharan J 等，2008，<i>Science</i>：家族性与散发性 ALS 中的 TDP-43 突变 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TDP-43+mutations+in+familial+and+sporadic+amyotrophic+lateral+sclerosis">PubMed 检索</a></li>
+<li id="r3">Polymenidou M 等，2011，<i>Nature Neuroscience</i>：长 pre-mRNA 耗竭与错误剪接导致 TDP-43 丢失后的神经元易损 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Long+pre-mRNA+depletion+and+RNA+missplicing+contribute+to+neuronal+vulnerability+from+loss+of+TDP-43">PubMed 检索</a></li>
+<li id="r4">Ayala YM 等，2011，<i>EMBO Journal</i>：TDP-43 通过负反馈调节自身 mRNA 水平 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TDP-43+regulates+its+mRNA+levels+through+a+negative+feedback+loop">PubMed 检索</a></li>
+<li id="r5">Ling SC、Polymenidou M、Cleveland DW，2013，<i>Neuron</i>：ALS 与 FTD 中 RNA 与蛋白稳态失衡的汇聚机制 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Converging+mechanisms+in+ALS+and+FTD+disrupted+RNA+and+protein+homeostasis">PubMed 检索</a></li>
+<li id="r6">Ling JP 等，2015，<i>Science</i>：ALS-FTD 中 TDP-43 对非保守隐蔽外显子的抑制受损 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TDP-43+repression+of+nonconserved+cryptic+exons+is+compromised+in+ALS-FTD">PubMed 检索</a></li>
+<li id="r7">Klim JR 等，2019，<i>Nature Neuroscience</i>：TDP-43 维持 STMN2 水平 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=ALS-implicated+protein+TDP-43+sustains+levels+of+STMN2">PubMed 检索</a></li>
+<li id="r8">Melamed Z 等，2019，<i>Nature Neuroscience</i>：提前多聚腺苷酸化导致的 stathmin-2 丢失是 TDP-43 依赖性退行的特征 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Premature+polyadenylation-mediated+loss+of+stathmin-2+is+a+hallmark+of+TDP-43-dependent+neurodegeneration">PubMed 检索</a></li>
+<li id="r9">Brown AL 等，2022，<i>Nature</i>：TDP-43 丢失与 ALS 风险位点共同驱动 UNC13A 的错误剪接与耗竭 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TDP-43+loss+and+ALS-risk+SNPs+drive+mis-splicing+and+depletion+of+UNC13A">PubMed 检索</a></li>
+<li id="r10">Ma XR 等，2022，<i>Nature</i>：TDP-43 抑制 FTD-ALS 基因 UNC13A 的隐蔽外显子纳入 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TDP-43+represses+cryptic+exon+inclusion+in+the+FTD-ALS+gene+UNC13A">PubMed 检索</a></li>
+<li id="r11">Molliex A 等，2015，<i>Cell</i>：低复杂度结构域驱动的相分离促进应激颗粒组装并驱动病理性纤维化 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Phase+separation+by+low+complexity+domains+promotes+stress+granule+assembly+and+drives+pathological+fibrillization">PubMed 检索</a></li>
+<li id="r12">Nelson PT 等，2019，<i>Brain</i>：LATE 共识工作组报告 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Limbic-predominant+age-related+TDP-43+encephalopathy+LATE+consensus+working+group+report">PubMed 检索</a></li>
+<li id="r13">Gasset-Rosa F 等，2019，<i>Neuron</i>：不依赖应激颗粒的胞质 TDP-43 去混合与核输入抑制 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Cytoplasmic+TDP-43+de-mixing+independent+of+stress+granules">PubMed 检索</a></li>
+<li id="r14">Chou CC 等，2018，<i>Nature Neuroscience</i>：TDP-43 病理与核质转运缺陷 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TDP-43+pathology+disrupts+nuclear+pore+complexes+and+nucleocytoplasmic+transport">PubMed 检索</a></li>
+</ol>
+</section>
+
+<footer>
+本页为机制讲解与读图训练，用于把"已验证／有争议／会失效"三层分开，不构成临床建议或个体化医学意见。参考条目以标题给出并链接到 PubMed 检索，便于核对原文。
+</footer>
+
+
+</div>
+
+</body>
+</html>

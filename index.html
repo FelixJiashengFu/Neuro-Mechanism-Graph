@@ -11,13 +11,14 @@
   --paper:#f6f8fa; --surface:#ffffff; --surface-2:#eef2f6;
   --ink:#161b22; --ink-soft:#5b6673; --rule:#d6dce4;
   --known:#0f6b70; --known-wash:#e2f0f0; --hypo:#8f5300; --hypo-wash:#faecd8;
+  --patho:#962b64;
   --display:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Times New Roman",Georgia,serif;
   --body:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
   --term:ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root{
   --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
-  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; color-scheme:dark;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; color-scheme:dark;
 }}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
@@ -31,8 +32,10 @@ header p{color:var(--ink-soft);max-width:60ch;margin:0;font-size:16px}
 .swatch{width:26px;height:0;border-top-width:2.5px;flex:none}
 .sw-k{border-top-style:solid;border-top-color:var(--known)}
 .sw-h{border-top-style:dashed;border-top-color:var(--hypo)}
+.sw-p{border-top-style:dashed;border-top-color:var(--patho)}
 main{padding-block:40px 20px}
 .group{font-family:var(--term);font-size:11.5px;letter-spacing:.14em;color:var(--ink-soft);margin:0 0 14px}
+.group.more{margin-top:40px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
 a.card{display:block;background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--known);border-radius:7px;padding:22px 24px;text-decoration:none;color:inherit;min-width:0}
 a.card:hover{border-color:var(--known);background:var(--surface-2)}
@@ -54,11 +57,12 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding-block:22px 48px;
   <ul class="legend">
     <li><span class="swatch sw-k"></span>已验证的通用生物学 established</li>
     <li><span class="swatch sw-h"></span>待验证的假设 to be tested</li>
+    <li><span class="swatch sw-p"></span>会让方案失效的分支 failure branch</li>
   </ul>
 </div></header>
 
 <main class="wrap">
-  <p class="group">01 / TAU 与蛋白清除</p>
+  <p class="group">01 / 蛋白病理与清除</p>
   <div class="cards">
     <a class="card" href="./topics/tau-ptau181-clearance/index.html">
       <span class="tag">pTau181 · Arg 解聚 · LIR–LC3 · 溶酶体</span>
@@ -66,8 +70,51 @@ footer{border-top:1px solid var(--rule);margin-top:40px;padding-block:22px 48px;
       <p>六步机制图解：识别 pTau181、尝试解聚寡聚体、经 LIR 结合 LC3-II 进入自噬体、在溶酶体中水解。含 2×2 选择性矩阵、模块删除对照表和 38 条术语中英对照。</p>
       <span class="open">打开专题 →</span>
     </a>
+    <a class="card" href="./topics/amyloid-beta-clearance/index.html">
+      <span class="tag">Aβ · neprilysin · LRP1 · 类淋巴</span>
+      <h2>Aβ 不是"产得太多"，多数时候是"清不掉"</h2>
+      <p>把清除端拆成酶解、跨血脑屏障外排、胶质吞噬、体液引流四条并行通路。类淋巴通路的"对流还是扩散"之争如实画成虚线，并给出区分存量与速率的读数清单。</p>
+      <span class="open">打开专题 →</span>
+    </a>
   </div>
-  <p class="count">当前收录 1 个专题</p>
+
+  <p class="group more">02 / 错误折叠的传播</p>
+  <div class="cards">
+    <a class="card" href="./topics/alpha-synuclein-propagation/index.html">
+      <span class="tag">α-syn · 模板化 · 细胞间转移 · Braak</span>
+      <h2>α-syn 的"传播"：哪一步是实验事实，哪一步是类比</h2>
+      <p>把类朊病毒叙述拆成模板化扩增、细胞间转移、区域推进、致病后果四段。含种子扩增循环图、四条转移路径对比，以及 LAG3 一例的重复性争议。</p>
+      <span class="open">打开专题 →</span>
+    </a>
+  </div>
+
+  <p class="group more">03 / RNA 稳态与剪接</p>
+  <div class="cards">
+    <a class="card" href="./topics/tdp43-nuclear-loss/index.html">
+      <span class="tag">TDP-43 · 自调控 · 隐蔽外显子 · STMN2</span>
+      <h2>TDP-43 的病理有两张面孔，别只画其中一张</h2>
+      <p>核内功能丧失与胞质聚集并列。含自调控负反馈闭环、隐蔽外显子被错误纳入的前后对照图，以及相分离／应激颗粒假说的反例。</p>
+      <span class="open">打开专题 →</span>
+    </a>
+  </div>
+
+  <p class="group more">04 / 胶质细胞与降解机器</p>
+  <div class="cards">
+    <a class="card" href="./topics/microglial-phagocytosis/index.html">
+      <span class="tag">补体 · CR3 · CD47 · TREM2</span>
+      <h2>同一套吞噬机器，既能清掉斑块，也能吃掉好突触</h2>
+      <p>吞噬六步流程、决定突触去留的"吃我／别吃我"两类信号、以及 TREM2–DAP12 旁路。含底物 × 活性的 2×2，和"吞入 → 降解 → 机制 → 细胞归属"四行验证表。</p>
+      <span class="open">打开专题 →</span>
+    </a>
+    <a class="card" href="./topics/autophagy-lysosome-pathway/index.html">
+      <span class="tag">ULK1 · LC3 · p62 · TFEB · 通量</span>
+      <h2>自噬体变多，可能是开工变快，也可能是出口堵了</h2>
+      <p>本库多个专题的共同出口。六步流程之外，用一整节处理自噬通量的判读：没有"堵出口"的对照，LC3-II 这条读数根本没有方向性。</p>
+      <span class="open">打开专题 →</span>
+    </a>
+  </div>
+
+  <p class="count">当前收录 6 个专题</p>
   <div class="note">本库页面不依赖在线资源：无 CDN、无在线字体，整页单文件可下载离线阅读。内容为机制讲解与方案自查，非临床建议。</div>
 </main>
 

@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="小胶质细胞吞噬的六步流程、决定突触去留的两类信号（补体与 CD47/CD22）以及 TREM2–DAP12 旁路。实线画已验证生物学，虚线画待检验假设，术语附中英对照。">
+<title>小胶质细胞吞噬机制图解｜补体修剪 · TREM2 · 吃我与别吃我</title>
+<style>
+:root{
+  --paper:#f6f8fa;
+  --surface:#ffffff;
+  --surface-2:#eef2f6;
+  --ink:#161b22;
+  --ink-soft:#5b6673;
+  --rule:#d6dce4;
+  --known:#0f6b70;        /* 已验证的通用生物学 */
+  --known-wash:#e2f0f0;
+  --hypo:#8f5300;         /* 待检验的假设 */
+  --hypo-wash:#faecd8;
+  --patho:#962b64;        /* 病理物种 / 失效分支 */
+  --patho-wash:#f8e5ee;
+  --display:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Times New Roman",Georgia,serif;
+  --body:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --term:ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+.backnav{font-family:var(--term);font-size:11px;letter-spacing:.1em;margin-bottom:20px}
+.backnav a{color:var(--ink-soft);text-decoration:none}
+.backnav a:hover{color:var(--known)}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.75;margin:0;
+     -webkit-font-smoothing:antialiased;font-size:15px}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:40px 64px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);letter-spacing:-.01em}
+h2{font-size:clamp(19px,3.6vw,25px)}
+h3{font-size:16px}
+p{margin:.7em 0}
+a{color:var(--known);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--hypo);outline-offset:2px;border-radius:2px}
+.eyebrow{font-family:var(--term);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.lede{font-size:17px;color:var(--ink-soft);max-width:62ch}
+.t em{font-family:var(--term);font-style:normal;font-size:.76em;color:var(--ink-soft);letter-spacing:.01em;padding-left:.35em}
+sup a{font-family:var(--term);font-size:10px;text-decoration:none;padding:0 1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:8px;font-size:12.5px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:999px;padding:5px 13px 5px 10px}
+.swatch{width:26px;height:0;border-top-width:2.5px;flex:none}
+.sw-k{border-top-style:solid;border-top-color:var(--known)}
+.sw-h{border-top-style:dashed;border-top-color:var(--hypo)}
+.sw-p{border-top-style:dashed;border-top-color:var(--patho)}
+.note{background:var(--surface-2);border-left:3px solid var(--rule);padding:14px 18px;margin:28px 0;font-size:13.5px;color:var(--ink-soft)}
+.note strong{color:var(--ink)}
+section{margin-top:52px;padding-top:28px;border-top:1px solid var(--rule)}
+.step-no{font-family:var(--term);font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft);display:block;margin-bottom:6px}
+.tag{font-family:var(--term);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:4px;white-space:nowrap;display:inline-block;vertical-align:2px}
+.tag-k{background:var(--known-wash);color:var(--known)}
+.tag-h{background:var(--hypo-wash);color:var(--hypo)}
+.tag-p{background:var(--patho-wash);color:var(--patho)}
+figure{margin:26px 0 0}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px}
+.scroll svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--ink-soft);margin-top:10px;max-width:70ch}
+svg text{fill:currentColor}
+svg .lbl{font-family:var(--body);font-weight:500;font-size:13px}
+svg .en{font-family:var(--term);font-size:9.5px;fill:var(--ink-soft)}
+svg .arw{font-family:var(--body);font-weight:500;font-size:11px}
+svg .arwen{font-family:var(--term);font-size:9px;fill:var(--ink-soft)}
+svg .box{fill:var(--surface);stroke:var(--rule);stroke-width:1.2}
+svg .k{stroke:var(--known);fill:none;stroke-width:1.7}
+svg .h{stroke:var(--hypo);fill:none;stroke-width:1.7;stroke-dasharray:6 4}
+svg .hb{stroke:var(--hypo);fill:none;stroke-width:3;stroke-dasharray:7 4}
+svg .p{stroke:var(--patho);fill:none;stroke-width:1.7;stroke-dasharray:4 4}
+svg .mk-k{fill:var(--known)}
+svg .mk-h{fill:var(--hypo)}
+svg .mk-p{fill:var(--patho)}
+svg .tau{fill:var(--patho-wash);stroke:var(--patho);stroke-width:1.3}
+svg .pep{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.1}
+svg .seg-a{fill:var(--known-wash);stroke:var(--known);stroke-width:1.3}
+svg .seg-b{fill:var(--hypo-wash);stroke:var(--hypo);stroke-width:1.3}
+svg .seg-c{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.3}
+svg .ghost{fill:none;stroke:var(--ink-soft);stroke-width:1.1;stroke-dasharray:3 3}
+.eq{font-family:var(--term);font-size:13px;background:var(--surface);border:1px solid var(--rule);
+    border-left:3px solid var(--known);border-radius:4px;padding:12px 16px;margin:18px 0;overflow-x:auto;white-space:nowrap}
+.eq small{display:block;white-space:normal;font-family:var(--body);font-size:12px;color:var(--ink-soft);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;min-width:0}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;margin:.4em 0 0;color:var(--ink-soft)}
+.card.hypo{border-left:3px solid var(--hypo)}
+.card.known{border-left:3px solid var(--known)}
+.card.patho{border-left:3px solid var(--patho)}
+.neq{font-family:var(--term);font-size:14.5px;color:var(--ink);display:block;margin-bottom:4px;word-break:break-word}
+.m22{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;margin-top:22px;font-size:13px;min-width:0}
+.m22 .rh,.m22 .ch{font-family:var(--term);font-size:11px;letter-spacing:.04em;color:var(--ink-soft);align-self:center}
+.m22 .cell{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:12px 14px;min-width:0}
+.m22 .cell b{display:block;font-weight:500;font-size:13.5px}
+.m22 .cell span{color:var(--ink-soft);font-size:12.5px}
+.m22 .target{border:1.5px solid var(--hypo);background:var(--hypo-wash)}
+.tablewrap{overflow-x:auto;margin-top:22px;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:13.5px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--term);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+td:first-child{font-weight:500}
+.mark{font-family:var(--term);font-size:14px;font-variant-numeric:tabular-nums}
+.yes{color:var(--known)}
+.no{color:var(--patho)}
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 28px;margin:18px 0 0}
+dl.gloss>div{border-bottom:1px solid var(--rule);padding:11px 0;min-width:0}
+dt{font-weight:500;font-size:14px}
+dt span{font-family:var(--term);font-size:11.5px;color:var(--ink-soft);padding-left:.5em}
+dd{margin:3px 0 0;font-size:13px;color:var(--ink-soft)}
+ol.refs{font-size:12.5px;color:var(--ink-soft);padding-left:22px;margin-top:18px}
+ol.refs li{margin:7px 0;word-break:break-word}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="backnav"><a href="../../index.html">&#8592; 返回目录 / INDEX</a></nav>
+
+
+<p class="eyebrow">Topic 05 · 小胶质细胞吞噬与补体修剪</p>
+<h1>同一套吞噬机器，既能清掉斑块，也能吃掉好突触</h1>
+<p class="lede">小胶质细胞不是"被激活才干活"的消防队，它一直在扫描脑实质。问题在于：它用来清除碎片的那套分子工具，和发育期用来修剪多余突触的是<b>同一套</b>。本页画清楚这套机器的六步流程、决定"吃不吃"的两类信号，以及 TREM2 这条最受关注的旁路。</p>
+
+<ul class="legend">
+  <li><span class="swatch sw-k"></span>已验证的通用生物学 <span class="t"><em>established</em></span></li>
+  <li><span class="swatch sw-h"></span>有支持但仍待检验 <span class="t"><em>to be tested</em></span></li>
+  <li><span class="swatch sw-p"></span>有害分支 <span class="t"><em>harmful branch</em></span></li>
+</ul>
+
+<div class="note">
+<strong>先去掉一个常见误解：</strong>小胶质细胞不是从血里来的免疫细胞。谱系追踪显示成年小胶质细胞源自胚胎期<span class="t">卵黄囊<em>yolk sac</em></span>的原始巨噬细胞，并在脑内自我维持。<sup><a href="#r1">1</a></sup>在体双光子成像也显示，所谓"静息"的小胶质细胞其实<b>突起在持续伸缩扫描</b>。<sup><a href="#r2">2</a></sup>把它写成"平时睡着、炎症时才醒"是错的。
+</div>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1230 262" role="img" aria-label="小胶质细胞吞噬的六步流程：待清除物、打上吃我标签、受体结合、形成吞噬体、与溶酶体融合、降解；并有标签打错与降解不足两条有害分支" style="min-width:900px">
+      <defs>
+        <marker id="d1k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="d1h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-h" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="d1p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="20"   y="46" width="180" height="46" rx="5"/><text class="lbl" x="110"  y="67" text-anchor="middle">待清除物</text><text class="en" x="110"  y="83" text-anchor="middle">plaque · debris · synapse</text>
+      <rect class="box" x="240"  y="46" width="170" height="46" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="325"  y="67" text-anchor="middle">打上"吃我"标签</text><text class="en" x="325"  y="83" text-anchor="middle">opsonization</text>
+      <rect class="box" x="450"  y="46" width="160" height="46" rx="5"/><text class="lbl" x="530"  y="67" text-anchor="middle">受体结合</text><text class="en" x="530"  y="83" text-anchor="middle">CR3 · TREM2 · TAM</text>
+      <rect class="box" x="650"  y="46" width="150" height="46" rx="5"/><text class="lbl" x="725"  y="67" text-anchor="middle">吞噬体</text><text class="en" x="725"  y="83" text-anchor="middle">phagosome</text>
+      <rect class="box" x="840"  y="46" width="170" height="46" rx="5"/><text class="lbl" x="925"  y="67" text-anchor="middle">与溶酶体融合</text><text class="en" x="925"  y="83" text-anchor="middle">phagolysosome</text>
+      <rect class="box" x="1050" y="46" width="150" height="46" rx="5" style="stroke:var(--known)"/><text class="lbl" x="1125" y="67" text-anchor="middle">降解</text><text class="en" x="1125" y="83" text-anchor="middle">degraded</text>
+
+      <line class="h" x1="204"  y1="69" x2="232"  y2="69" marker-end="url(#d1h)"/>
+      <line class="k" x1="414"  y1="69" x2="442"  y2="69" marker-end="url(#d1k)"/>
+      <line class="k" x1="614"  y1="69" x2="642"  y2="69" marker-end="url(#d1k)"/>
+      <line class="k" x1="804"  y1="69" x2="832"  y2="69" marker-end="url(#d1k)"/>
+      <line class="k" x1="1014" y1="69" x2="1042" y2="69" marker-end="url(#d1k)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="218"  y="26" style="fill:var(--hypo)">标记</text><text class="arwen" x="218"  y="38">tag</text>
+        <text class="arw" x="428"  y="26">识别</text><text class="arwen" x="428"  y="38">recognize</text>
+        <text class="arw" x="628"  y="26">吞入</text><text class="arwen" x="628"  y="38">engulf</text>
+        <text class="arw" x="818"  y="26">融合</text><text class="arwen" x="818"  y="38">fuse</text>
+        <text class="arw" x="1028" y="26">水解</text><text class="arwen" x="1028" y="38">hydrolyze</text>
+      </g>
+
+      <path class="h" d="M325 96 C325 130 300 140 290 168" marker-end="url(#d1h)"/>
+      <rect class="box" x="40" y="174" width="480" height="68" rx="5" style="stroke:var(--hypo)"/>
+      <text class="lbl" x="56" y="198">分支 A：标签打在还在工作的突触上</text>
+      <text class="en"  x="56" y="216">mistagging a functional synapse — the pruning machinery misfires</text>
+      <text class="en"  x="56" y="234" style="fill:var(--hypo)">流程本身没出错，出错的是"该不该吃"的判断</text>
+
+      <path class="p" d="M725 96 C725 130 700 140 690 168" marker-end="url(#d1p)"/>
+      <rect class="box" x="560" y="174" width="500" height="68" rx="5" style="stroke:var(--patho)"/>
+      <text class="lbl" x="576" y="198">分支 B：吞进去了，却降解不掉</text>
+      <text class="en"  x="576" y="216">ingestion without degradation — the cell becomes a storage depot</text>
+      <text class="en"  x="576" y="234" style="fill:var(--patho)">吞噬 ≠ 清除；这一步依赖溶酶体功能是否完好</text>
+    </svg>
+  </div>
+  <figcaption><b>图 1 · 流程是通用的，风险在两端。</b>前端决定"吃什么"，后端决定"吃了算不算数"。后端那一步与<a href="../autophagy-lysosome-pathway/index.html">自噬—溶酶体通路</a>共用同一套降解机器，所以溶酶体功能受损时，小胶质细胞会从清道夫变成仓库。</figcaption>
+</figure>
+
+<!-- ============ eat me / don't eat me ============ -->
+<section>
+<span class="step-no">决策层 / TWO SIGNALS</span>
+<h2>"吃我"与"别吃我"：一场持续的拉锯 <span class="tag tag-k">已验证</span></h2>
+<p>突触留不留，不由某一个分子单独决定，而取决于两类信号的相对强度。经典<span class="t">补体级联<em>classical complement cascade</em></span>在发育期的突触消除中有明确作用：<span class="t"><em>C1q</em></span>沉积、激活 <span class="t"><em>C3</em></span>，产生的 C3b/iC3b 被小胶质细胞的 <span class="t">补体受体 3<em>CR3, CD11b/CD18</em></span> 识别。<sup><a href="#r3">3</a></sup><sup><a href="#r4">4</a></sup></p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1000 282" role="img" aria-label="吃我信号与别吃我信号分列两侧，共同决定一个突触的去留" style="min-width:760px">
+      <defs>
+        <marker id="d2k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="d2p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="30" y="50" width="320" height="180" rx="6" style="stroke:var(--patho)"/>
+      <text class="lbl" x="46" y="76">"吃我"信号</text>
+      <text class="en"  x="46" y="94">eat-me signals</text>
+      <text class="en"  x="46" y="120">C1q 沉积 → C3 激活 → C3b / iC3b</text>
+      <text class="en"  x="46" y="142">小胶质 CR3（CD11b/CD18）识别标签</text>
+      <text class="en"  x="46" y="164">磷脂酰丝氨酸外翻</text>
+      <text class="en"  x="46" y="182">phosphatidylserine exposure</text>
+      <text class="en"  x="46" y="210" style="fill:var(--patho)">发育期的正常机制，疾病模型中被重新打开</text>
+
+      <rect class="box" x="650" y="50" width="320" height="180" rx="6" style="stroke:var(--known)"/>
+      <text class="lbl" x="666" y="76">"别吃我"信号</text>
+      <text class="en"  x="666" y="94">don't-eat-me signals</text>
+      <text class="en"  x="666" y="120">CD47 → 小胶质 SIRPα</text>
+      <text class="en"  x="666" y="142">CD22 → 唾液酸配体（与衰老相关）</text>
+      <text class="en"  x="666" y="164">突触自身的活动水平也提供保护</text>
+      <text class="en"  x="666" y="182">activity-dependent protection</text>
+      <text class="en"  x="666" y="210" style="fill:var(--known)">缺了这一侧，会出现过度修剪</text>
+
+      <rect class="box" x="400" y="110" width="200" height="70" rx="6" style="stroke:var(--ink-soft);stroke-width:2"/>
+      <text class="lbl" x="500" y="140" text-anchor="middle">这个突触留不留</text>
+      <text class="en"  x="500" y="160" text-anchor="middle">synapse fate</text>
+
+      <line class="p" x1="354" y1="145" x2="392" y2="145" marker-end="url(#d2p)"/>
+      <line class="k" x1="646" y1="145" x2="608" y2="145" marker-end="url(#d2k)"/>
+
+      <text class="lbl" x="500" y="256" text-anchor="middle">净结果 = 两侧之差，而不是某一个分子的有无</text>
+      <text class="en"  x="500" y="272" text-anchor="middle">measure both arms, or the conclusion will not hold</text>
+    </svg>
+  </div>
+  <figcaption><b>图 2 · 为什么单测一侧会得出相反结论。</b>敲掉 CD47 会导致发育期过度修剪，说明"别吃我"这一侧是真实存在的刹车。<sup><a href="#r6">6</a></sup>衰老脑中 CD22 通路的改变则会压低正常吞噬能力，阻断 CD22 可部分恢复。<sup><a href="#r7">7</a></sup>只看补体会把修剪说成单向过程。</figcaption>
+</figure>
+
+<div class="cards">
+  <div class="card patho"><h3>疾病中的"旧机器，新用途"</h3><p>在 AD 模型里，补体与小胶质细胞介导的突触丢失出现在斑块沉积<b>之前</b>，阻断 C1q、C3 或 CR3 可减少这种丢失。<sup><a href="#r5">5</a></sup>这把"突触丢失"从结果改写成了一个<b>可干预的主动过程</b>。</p></div>
+  <div class="card patho"><h3>不只在 AD</h3><p>病毒感染后的记忆损害、以及<span class="t">颗粒蛋白前体<em>progranulin</em></span>缺失相关的额颞叶变性模型中，都观察到补体—小胶质轴驱动的回路特异性突触修剪。<sup><a href="#r14">14</a></sup><sup><a href="#r12">12</a></sup></p></div>
+  <div class="card hypo"><span class="neq">补体升高 ≠ 突触正在被吃</span><p>要证明吞噬正在发生，需要在小胶质细胞<b>内部</b>看到突触标志物，并用阻断实验验证因果。免疫染色强度本身不是吞噬速率。</p></div>
+</div>
+</section>
+
+<!-- ============ TREM2 ============ -->
+<section>
+<span class="step-no">旁路 / TREM2–DAP12</span>
+<h2>TREM2：把遗传学和细胞行为接起来的一条线 <span class="tag tag-k">遗传关联确立</span> <span class="tag tag-h">因果链待补</span></h2>
+<p><span class="t"><em>TREM2</em></span>是小胶质细胞表面的受体，可结合多种脂质与凋亡碎片，通过<span class="t"><em>DAP12</em></span>的 ITAM 基序经 SYK 向下传信号。两项独立研究同时报告 <span class="t"><em>R47H</em></span> 变异显著提高 AD 风险，<sup><a href="#r8">8</a></sup>这使它成为少数"遗传学指向明确细胞类型"的例子。</p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1000 250" role="img" aria-label="配体结合 TREM2 后经 DAP12 与 SYK 向下传信号，影响吞噬能力、存活与代谢以及疾病相关小胶质状态" style="min-width:740px">
+      <defs>
+        <marker id="d3k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <text class="en" x="257" y="16" text-anchor="middle">小胶质细胞膜</text>
+      <rect x="240" y="24" width="34" height="212" rx="3" fill="var(--surface-2)" stroke="var(--rule)" stroke-width="1.2"/>
+      <rect class="seg-a" x="234" y="110" width="46" height="42" rx="5"/>
+      <text class="en" x="257" y="168" text-anchor="middle">TREM2</text>
+
+      <rect class="box" x="20" y="108" width="180" height="46" rx="5"/>
+      <text class="lbl" x="110" y="128" text-anchor="middle">多种配体</text>
+      <text class="en"  x="110" y="146" text-anchor="middle">lipids · debris · apoE</text>
+      <line class="k" x1="204" y1="131" x2="228" y2="131" marker-end="url(#d3k)"/>
+
+      <rect class="box" x="330" y="108" width="210" height="46" rx="5"/>
+      <text class="lbl" x="435" y="128" text-anchor="middle">DAP12 → SYK</text>
+      <text class="en"  x="435" y="146" text-anchor="middle">ITAM signalling</text>
+      <line class="k" x1="284" y1="131" x2="322" y2="131" marker-end="url(#d3k)"/>
+
+      <path class="k" d="M544 124 C580 104 584 76 612 58" marker-end="url(#d3k)"/>
+      <line class="k" x1="544" y1="131" x2="612" y2="131" marker-end="url(#d3k)"/>
+      <path class="k" d="M544 138 C580 158 584 186 612 204" marker-end="url(#d3k)"/>
+
+      <rect class="box" x="620" y="30" width="360" height="56" rx="5"/><text class="lbl" x="636" y="54">吞噬能力</text><text class="en" x="636" y="72">clearance of debris, myelin and plaque material</text>
+      <rect class="box" x="620" y="104" width="360" height="56" rx="5"/><text class="lbl" x="636" y="128">存活与能量代谢</text><text class="en" x="636" y="146">survival and metabolic fitness of the cell itself</text>
+      <rect class="box" x="620" y="178" width="360" height="56" rx="5" style="stroke:var(--hypo)"/><text class="lbl" x="636" y="202">疾病相关小胶质状态</text><text class="en" x="636" y="220">DAM program — 转录状态转换，分两步且部分依赖 TREM2</text>
+
+      <text class="lbl" x="300" y="206" text-anchor="middle" style="fill:var(--hypo)">R47H 等变异削弱这条信号</text>
+      <text class="en"  x="300" y="222" text-anchor="middle">a risk variant, not a switch — effect size is modest</text>
+    </svg>
+  </div>
+  <figcaption><b>图 3 · 一个受体，三类后果。</b>单细胞测序定义出一种围绕斑块的<span class="t">疾病相关小胶质细胞<em>disease-associated microglia, DAM</em></span>状态，其转换分两步，第二步依赖 TREM2。<sup><a href="#r9">9</a></sup>TREM2 也被报告为脂质感受器，维持 AD 模型中小胶质细胞对斑块的应答。<sup><a href="#r10">10</a></sup>注意分寸：这些结果说明 TREM2 <b>参与</b>这些过程，不等于"增强 TREM2 就能治病"。</figcaption>
+</figure>
+</section>
+
+<!-- ============ 双刃剑 ============ -->
+<section>
+<span class="step-no">读图要点 / THE 2×2</span>
+<h2>同一个动作，好坏取决于吃的是什么</h2>
+<div class="m22">
+  <div></div>
+  <div class="ch">吞噬活性低 low phagocytosis</div>
+  <div class="ch">吞噬活性高 high phagocytosis</div>
+
+  <div class="rh">目标是碎片 / 斑块</div>
+  <div class="cell"><b>清除不足</b><span>病理物质堆积</span></div>
+  <div class="cell target"><b>想要的状态</b><span>这一格是大多数干预想推进去的方向</span></div>
+
+  <div class="rh">目标是功能性突触</div>
+  <div class="cell"><b>突触被保住</b><span>但发育期修剪不足也有代价</span></div>
+  <div class="cell"><b>过度修剪</b><span>回路被削弱，认知下降</span></div>
+</div>
+<p style="font-size:13px;color:var(--ink-soft);margin-top:14px">这张表解释了为什么"激活小胶质细胞"或"抑制小胶质细胞"都不是合格的方案表述——必须说清楚<b>对哪一类底物</b>的吞噬被改变了。</p>
+</section>
+
+<!-- ============ 验证 ============ -->
+<section>
+<span class="step-no">验证 / EVIDENCE</span>
+<h2>四个常被混淆的读数</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>要回答的问题</th><th>合适的读数</th><th>常见误用</th></tr></thead>
+<tbody>
+<tr><td>真的吞进去了吗？</td><td>三维重建确认标志物位于小胶质细胞<b>内部</b>的溶酶体区室中</td><td>二维图像上的"靠在一起"当成吞入</td></tr>
+<tr><td>吞进去的被降解了吗？</td><td>用 pH 敏感探针区分吞噬体与已酸化的吞噬溶酶体；阻断溶酶体后应堆积</td><td>只数吞噬体数量，数量多可能代表<b>堵住了</b></td></tr>
+<tr><td>是补体介导的吗？</td><td>敲除 C1q / C3 / CR3 后效应应当减弱<sup><a href="#r5">5</a></sup></td><td>只报告补体蛋白表达升高</td></tr>
+<tr><td>是小胶质细胞干的吗？</td><td>条件性清除或细胞特异性敲除后看表型是否消失</td><td>用全身性炎症指标推断局部细胞行为</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note" style="border-left-color:var(--hypo)">
+<strong>读法：</strong>这四行从前到后依次是"<b>吞入 → 降解 → 机制 → 细胞归属</b>"。一条完整的吞噬叙述需要四行都有数据；只有第一行时，最多只能说"看起来靠近"。
+</div>
+</section>
+
+<!-- ============ 术语表 ============ -->
+<section>
+<span class="step-no">对照表 / GLOSSARY</span>
+<h2>术语中英对照</h2>
+
+<h3 style="margin-top:22px">名词 Nouns</h3>
+<dl class="gloss">
+<div><dt>小胶质细胞<span>microglia</span></dt><dd>脑内常驻的髓系免疫细胞，源自卵黄囊并在脑内自我维持。<sup><a href="#r1">1</a></sup></dd></div>
+<div><dt>突触修剪<span>synaptic pruning</span></dt><dd>发育期选择性消除多余突触的过程。<sup><a href="#r11">11</a></sup></dd></div>
+<div><dt>补体级联<span>complement cascade</span></dt><dd>一组可被依次激活的血浆／局部蛋白，产生标记与促炎片段。</dd></div>
+<div><dt>C1q<span>complement component 1q</span></dt><dd>经典途径的起始识别分子，可沉积在待消除的突触上。</dd></div>
+<div><dt>C3b / iC3b<span>opsonin fragments</span></dt><dd>C3 激活后产生的标签片段，被 CR3 识别。</dd></div>
+<div><dt>补体受体 3<span>CR3, CD11b/CD18</span></dt><dd>小胶质细胞上识别 iC3b 的受体。</dd></div>
+<div><dt>调理作用<span>opsonization</span></dt><dd>给目标打上"可被吞噬"的分子标签。</dd></div>
+<div><dt>磷脂酰丝氨酸<span>phosphatidylserine, PS</span></dt><dd>正常位于膜内侧的磷脂；外翻后成为"吃我"信号。</dd></div>
+<div><dt>CD47–SIRPα<span>CD47–SIRPα axis</span></dt><dd>经典的"别吃我"信号对。<sup><a href="#r6">6</a></sup></dd></div>
+<div><dt>CD22<span>CD22</span></dt><dd>识别唾液酸配体的抑制性受体，与衰老脑吞噬能力下降相关。<sup><a href="#r7">7</a></sup></dd></div>
+<div><dt>TREM2<span>triggering receptor expressed on myeloid cells 2</span></dt><dd>小胶质细胞表面受体；R47H 变异提高 AD 风险。<sup><a href="#r8">8</a></sup></dd></div>
+<div><dt>DAP12<span>TYROBP</span></dt><dd>与 TREM2 配对的信号接头蛋白，含 ITAM 基序。</dd></div>
+<div><dt>DAM<span>disease-associated microglia</span></dt><dd>单细胞测序定义的一类疾病相关小胶质状态。<sup><a href="#r9">9</a></sup></dd></div>
+<div><dt>吞噬体<span>phagosome</span></dt><dd>吞入物质后形成的膜性囊泡。</dd></div>
+<div><dt>吞噬溶酶体<span>phagolysosome</span></dt><dd>吞噬体与溶酶体融合后的酸性降解区室。</dd></div>
+<div><dt>颗粒蛋白前体<span>progranulin, GRN</span></dt><dd>其缺失与额颞叶变性相关，并影响小胶质修剪行为。<sup><a href="#r12">12</a></sup></dd></div>
+<div><dt>卵黄囊<span>yolk sac</span></dt><dd>胚胎期造血部位，小胶质细胞的来源。</dd></div>
+<div><dt>双光子活体成像<span>two-photon in vivo imaging</span></dt><dd>在活体中观察细胞动态的方法。<sup><a href="#r2">2</a></sup></dd></div>
+</dl>
+
+<h3 style="margin-top:30px">动词 Verbs</h3>
+<dl class="gloss">
+<div><dt>监视 / 扫描<span>surveil</span></dt><dd>突起持续伸缩采样周围环境。</dd></div>
+<div><dt>调理<span>opsonize</span></dt><dd>给目标打上促吞噬的标签。</dd></div>
+<div><dt>吞噬<span>phagocytose</span></dt><dd>把胞外物质整体吞入膜泡。</dd></div>
+<div><dt>修剪<span>prune</span></dt><dd>选择性消除突触结构。</dd></div>
+<div><dt>融合<span>fuse</span></dt><dd>吞噬体与溶酶体合并。</dd></div>
+<div><dt>酸化<span>acidify</span></dt><dd>区室内 pH 下降，是降解能力的前提。</dd></div>
+<div><dt>降解<span>degrade</span></dt><dd>把吞入物分解掉；与"吞入"是两件事。</dd></div>
+<div><dt>抑制<span>inhibit</span></dt><dd>"别吃我"信号施加的刹车。</dd></div>
+<div><dt>敲除<span>knock out</span></dt><dd>去掉某个基因以检验其必要性。</dd></div>
+<div><dt>条件性清除<span>conditionally deplete</span></dt><dd>在特定时间去掉某类细胞，用于归因。</dd></div>
+<div><dt>归因<span>attribute</span></dt><dd>把观察到的效应指派给某种细胞或分子。</dd></div>
+<div><dt>重新打开<span>re-engage</span></dt><dd>疾病中重新启用发育期的程序。</dd></div>
+</dl>
+</section>
+
+<!-- ============ 结论 ============ -->
+<section>
+<span class="step-no">结论 / BOTTOM LINE</span>
+<h2>核心结论</h2>
+<div class="cards">
+  <div class="card known"><h3>① 吞噬流程是通用的</h3><p>风险不在流程，而在"吃什么"与"吃完有没有降解"。</p></div>
+  <div class="card known"><h3>② 补体修剪在疾病中被重新启用</h3><p>并且可能早于经典病理标志出现。<sup><a href="#r5">5</a></sup></p></div>
+  <div class="card known"><h3>③ 刹车和油门都要测</h3><p>只测"吃我"一侧，结论方向可能完全相反。</p></div>
+  <div class="card hypo"><h3>④ TREM2：方向明确，剂量未知</h3><p>遗传关联扎实，但"增强它"是否安全有效仍待验证。</p></div>
+</div>
+
+<ol class="refs">
+<li id="r1">Ginhoux F 等，2010，<i>Science</i>：谱系追踪显示成年小胶质细胞源自原始巨噬细胞 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Fate+mapping+analysis+reveals+that+adult+microglia+derive+from+primitive+macrophages">PubMed 检索</a></li>
+<li id="r2">Nimmerjahn A 等，2005，<i>Science</i>："静息"小胶质细胞是高度动态的实质监视者 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Resting+microglial+cells+are+highly+dynamic+surveillants+of+brain+parenchyma+in+vivo">PubMed 检索</a></li>
+<li id="r3">Stevens B 等，2007，<i>Cell</i>：经典补体级联介导中枢突触消除 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=The+classical+complement+cascade+mediates+CNS+synapse+elimination">PubMed 检索</a></li>
+<li id="r4">Schafer DP 等，2012，<i>Neuron</i>：小胶质细胞以活动与补体依赖的方式塑造出生后神经回路 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Microglia+sculpt+postnatal+neural+circuits+in+an+activity+and+complement-dependent+manner">PubMed 检索</a></li>
+<li id="r5">Hong S 等，2016，<i>Science</i>：补体与小胶质细胞介导 AD 小鼠模型中的早期突触丢失 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Complement+and+microglia+mediate+early+synapse+loss+in+Alzheimer+mouse+models">PubMed 检索</a></li>
+<li id="r6">Lehrman EK 等，2018，<i>Neuron</i>：CD47 在发育期保护突触免于过度修剪 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=CD47+protects+synapses+from+excess+microglia-mediated+pruning+during+development">PubMed 检索</a></li>
+<li id="r7">Pluvinage JV 等，2019，<i>Nature</i>：阻断 CD22 可恢复衰老脑中小胶质细胞的稳态吞噬 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=CD22+blockade+restores+homeostatic+microglial+phagocytosis+in+ageing+brains">PubMed 检索</a></li>
+<li id="r8">Guerreiro R 等 / Jonsson T 等，2013，<i>New England Journal of Medicine</i>：TREM2 变异与阿尔茨海默病风险 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TREM2+variants+in+Alzheimer%27s+disease">PubMed 检索</a></li>
+<li id="r9">Keren-Shaul H 等，2017，<i>Cell</i>：一类与限制 AD 发展相关的独特小胶质细胞类型 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=A+Unique+Microglia+Type+Associated+with+Restricting+Development+of+Alzheimer%27s+Disease">PubMed 检索</a></li>
+<li id="r10">Wang Y 等，2015，<i>Cell</i>：TREM2 的脂质感受功能维持 AD 模型中的小胶质应答 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TREM2+lipid+sensing+sustains+the+microglial+response+in+an+Alzheimer%27s+disease+model">PubMed 检索</a></li>
+<li id="r11">Paolicelli RC 等，2011，<i>Science</i>：小胶质细胞的突触修剪是正常脑发育所必需 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Synaptic+pruning+by+microglia+is+necessary+for+normal+brain+development">PubMed 检索</a></li>
+<li id="r12">Lui H 等，2016，<i>Cell</i>：progranulin 缺失经补体激活促进回路特异性突触修剪 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Progranulin+Deficiency+Promotes+Circuit-Specific+Synaptic+Pruning+by+Microglia+via+Complement+Activation">PubMed 检索</a></li>
+<li id="r13">Butovsky O、Weiner HL，2018，<i>Nature Reviews Neuroscience</i>：小胶质细胞特征谱及其在健康与疾病中的作用 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Microglial+signatures+and+their+role+in+health+and+disease">PubMed 检索</a></li>
+<li id="r14">Vasek MJ 等，2016，<i>Nature</i>：补体—小胶质轴驱动病毒感染后记忆损害中的突触丢失 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=A+complement-microglial+axis+drives+synapse+loss+during+virus-induced+memory+impairment">PubMed 检索</a></li>
+</ol>
+</section>
+
+<footer>
+本页为机制讲解与读图训练，用于把"已验证／有争议／会失效"三层分开，不构成临床建议或个体化医学意见。参考条目以标题给出并链接到 PubMed 检索，便于核对原文。
+</footer>
+
+
+</div>
+
+</body>
+</html>

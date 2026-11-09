@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="自噬—溶酶体通路的六步机制图解，含自噬通量判读 2×2、泛素—受体—LC3 的选择性接口与 mTORC1/AMPK/TFEB 双臂调控。实线画已验证生物学，术语附中英对照。">
+<title>自噬—溶酶体通路图解｜六步流程 · 自噬通量 · 选择性受体 · TFEB</title>
+<style>
+:root{
+  --paper:#f6f8fa;
+  --surface:#ffffff;
+  --surface-2:#eef2f6;
+  --ink:#161b22;
+  --ink-soft:#5b6673;
+  --rule:#d6dce4;
+  --known:#0f6b70;        /* 已验证的通用生物学 */
+  --known-wash:#e2f0f0;
+  --hypo:#8f5300;         /* 待检验的假设 */
+  --hypo-wash:#faecd8;
+  --patho:#962b64;        /* 病理物种 / 失效分支 */
+  --patho-wash:#f8e5ee;
+  --display:"Songti SC","Noto Serif CJK SC","Source Han Serif SC","Times New Roman",Georgia,serif;
+  --body:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --term:ui-monospace,SFMono-Regular,"Cascadia Mono",Consolas,"Liberation Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#0d1116; --surface:#141a21; --surface-2:#1b222a; --ink:#e6ecf3; --ink-soft:#97a3b2; --rule:#2a333e;
+  --known:#63d2d6; --known-wash:#112a2c; --hypo:#eeb257; --hypo-wash:#2e2414; --patho:#ef90bd; --patho-wash:#2c1723;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+.backnav{font-family:var(--term);font-size:11px;letter-spacing:.1em;margin-bottom:20px}
+.backnav a{color:var(--ink-soft);text-decoration:none}
+.backnav a:hover{color:var(--known)}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.75;margin:0;
+     -webkit-font-smoothing:antialiased;font-size:15px}
+.wrap{max-width:880px;margin:0 auto;padding-inline:20px;padding-block:40px 64px}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;line-height:1.3;margin:0}
+h1{font-size:clamp(26px,5.2vw,40px);letter-spacing:-.01em}
+h2{font-size:clamp(19px,3.6vw,25px)}
+h3{font-size:16px}
+p{margin:.7em 0}
+a{color:var(--known);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--hypo);outline-offset:2px;border-radius:2px}
+.eyebrow{font-family:var(--term);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.lede{font-size:17px;color:var(--ink-soft);max-width:62ch}
+.t em{font-family:var(--term);font-style:normal;font-size:.76em;color:var(--ink-soft);letter-spacing:.01em;padding-left:.35em}
+sup a{font-family:var(--term);font-size:10px;text-decoration:none;padding:0 1px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0;padding:0;list-style:none}
+.legend li{display:flex;align-items:center;gap:8px;font-size:12.5px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:999px;padding:5px 13px 5px 10px}
+.swatch{width:26px;height:0;border-top-width:2.5px;flex:none}
+.sw-k{border-top-style:solid;border-top-color:var(--known)}
+.sw-h{border-top-style:dashed;border-top-color:var(--hypo)}
+.sw-p{border-top-style:dashed;border-top-color:var(--patho)}
+.note{background:var(--surface-2);border-left:3px solid var(--rule);padding:14px 18px;margin:28px 0;font-size:13.5px;color:var(--ink-soft)}
+.note strong{color:var(--ink)}
+section{margin-top:52px;padding-top:28px;border-top:1px solid var(--rule)}
+.step-no{font-family:var(--term);font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft);display:block;margin-bottom:6px}
+.tag{font-family:var(--term);font-size:10.5px;letter-spacing:.06em;padding:3px 8px;border-radius:4px;white-space:nowrap;display:inline-block;vertical-align:2px}
+.tag-k{background:var(--known-wash);color:var(--known)}
+.tag-h{background:var(--hypo-wash);color:var(--hypo)}
+.tag-p{background:var(--patho-wash);color:var(--patho)}
+figure{margin:26px 0 0}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px}
+.scroll svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--ink-soft);margin-top:10px;max-width:70ch}
+svg text{fill:currentColor}
+svg .lbl{font-family:var(--body);font-weight:500;font-size:13px}
+svg .en{font-family:var(--term);font-size:9.5px;fill:var(--ink-soft)}
+svg .arw{font-family:var(--body);font-weight:500;font-size:11px}
+svg .arwen{font-family:var(--term);font-size:9px;fill:var(--ink-soft)}
+svg .box{fill:var(--surface);stroke:var(--rule);stroke-width:1.2}
+svg .k{stroke:var(--known);fill:none;stroke-width:1.7}
+svg .h{stroke:var(--hypo);fill:none;stroke-width:1.7;stroke-dasharray:6 4}
+svg .hb{stroke:var(--hypo);fill:none;stroke-width:3;stroke-dasharray:7 4}
+svg .p{stroke:var(--patho);fill:none;stroke-width:1.7;stroke-dasharray:4 4}
+svg .mk-k{fill:var(--known)}
+svg .mk-h{fill:var(--hypo)}
+svg .mk-p{fill:var(--patho)}
+svg .tau{fill:var(--patho-wash);stroke:var(--patho);stroke-width:1.3}
+svg .pep{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.1}
+svg .seg-a{fill:var(--known-wash);stroke:var(--known);stroke-width:1.3}
+svg .seg-b{fill:var(--hypo-wash);stroke:var(--hypo);stroke-width:1.3}
+svg .seg-c{fill:var(--surface-2);stroke:var(--ink-soft);stroke-width:1.3}
+svg .ghost{fill:none;stroke:var(--ink-soft);stroke-width:1.1;stroke-dasharray:3 3}
+.eq{font-family:var(--term);font-size:13px;background:var(--surface);border:1px solid var(--rule);
+    border-left:3px solid var(--known);border-radius:4px;padding:12px 16px;margin:18px 0;overflow-x:auto;white-space:nowrap}
+.eq small{display:block;white-space:normal;font-family:var(--body);font-size:12px;color:var(--ink-soft);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px 18px;min-width:0}
+.card h3{margin-bottom:6px}
+.card p{font-size:13.5px;margin:.4em 0 0;color:var(--ink-soft)}
+.card.hypo{border-left:3px solid var(--hypo)}
+.card.known{border-left:3px solid var(--known)}
+.card.patho{border-left:3px solid var(--patho)}
+.neq{font-family:var(--term);font-size:14.5px;color:var(--ink);display:block;margin-bottom:4px;word-break:break-word}
+.m22{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;margin-top:22px;font-size:13px;min-width:0}
+.m22 .rh,.m22 .ch{font-family:var(--term);font-size:11px;letter-spacing:.04em;color:var(--ink-soft);align-self:center}
+.m22 .cell{background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:12px 14px;min-width:0}
+.m22 .cell b{display:block;font-weight:500;font-size:13.5px}
+.m22 .cell span{color:var(--ink-soft);font-size:12.5px}
+.m22 .target{border:1.5px solid var(--hypo);background:var(--hypo-wash)}
+.tablewrap{overflow-x:auto;margin-top:22px;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:13.5px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--term);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+tbody tr:last-child td{border-bottom:none}
+td:first-child{font-weight:500}
+.mark{font-family:var(--term);font-size:14px;font-variant-numeric:tabular-nums}
+.yes{color:var(--known)}
+.no{color:var(--patho)}
+dl.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 28px;margin:18px 0 0}
+dl.gloss>div{border-bottom:1px solid var(--rule);padding:11px 0;min-width:0}
+dt{font-weight:500;font-size:14px}
+dt span{font-family:var(--term);font-size:11.5px;color:var(--ink-soft);padding-left:.5em}
+dd{margin:3px 0 0;font-size:13px;color:var(--ink-soft)}
+ol.refs{font-size:12.5px;color:var(--ink-soft);padding-left:22px;margin-top:18px}
+ol.refs li{margin:7px 0;word-break:break-word}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);font-size:12px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="backnav"><a href="../../index.html">&#8592; 返回目录 / INDEX</a></nav>
+
+
+<p class="eyebrow">Topic 06 · 自噬—溶酶体通路</p>
+<h1>自噬体变多，可能是开工变快，也可能是出口堵了</h1>
+<p class="lede">本库里好几个专题最后都汇到同一个出口：自噬—溶酶体通路。它既是 tau 清除方案的终点站，也是小胶质细胞吞噬之后的降解车间。本页把这条通路的六步拆开，并用整整一节处理那个最容易出错的问题——<b>怎么区分"通量变快"和"出口堵住"</b>。</p>
+
+<ul class="legend">
+  <li><span class="swatch sw-k"></span>已验证的通用生物学 <span class="t"><em>established</em></span></li>
+  <li><span class="swatch sw-h"></span>有支持但仍待检验 <span class="t"><em>to be tested</em></span></li>
+  <li><span class="swatch sw-p"></span>会让读数反向的分支 <span class="t"><em>trap</em></span></li>
+</ul>
+
+<div class="note">
+<strong>为什么神经元格外依赖它：</strong>神经元不分裂，无法靠细胞分裂稀释掉有害蛋白。在小鼠中条件性敲除神经细胞的核心自噬基因（<span class="t"><em>Atg5</em></span>／<span class="t"><em>Atg7</em></span>），<b>即使没有任何致病蛋白过表达</b>，也会出现包涵体与神经退行。<sup><a href="#r2">2</a></sup><sup><a href="#r3">3</a></sup>这是"基础自噬本身就是神经元刚需"的直接证据。
+</div>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1230 256" role="img" aria-label="宏自噬六步：诱导、成核、延伸与封闭、自噬体、与溶酶体融合、降解回收；左侧标出上游开关，右侧标出融合或酸化失败导致自噬体堆积" style="min-width:900px">
+      <defs>
+        <marker id="e1k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+        <marker id="e1p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-p" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="20"   y="56" width="180" height="50" rx="5"/><text class="lbl" x="110"  y="78" text-anchor="middle">① 诱导</text><text class="en" x="110"  y="95" text-anchor="middle">ULK1 complex</text>
+      <rect class="box" x="240"  y="56" width="170" height="50" rx="5"/><text class="lbl" x="325"  y="78" text-anchor="middle">② 成核</text><text class="en" x="325"  y="95" text-anchor="middle">PI3KC3 → PI3P</text>
+      <rect class="box" x="450"  y="56" width="170" height="50" rx="5"/><text class="lbl" x="535"  y="78" text-anchor="middle">③ 延伸与封闭</text><text class="en" x="535"  y="95" text-anchor="middle">LC3 lipidation</text>
+      <rect class="box" x="660"  y="56" width="150" height="50" rx="5"/><text class="lbl" x="735"  y="78" text-anchor="middle">④ 自噬体</text><text class="en" x="735"  y="95" text-anchor="middle">autophagosome</text>
+      <rect class="box" x="850"  y="56" width="170" height="50" rx="5"/><text class="lbl" x="935"  y="78" text-anchor="middle">⑤ 与溶酶体融合</text><text class="en" x="935"  y="95" text-anchor="middle">STX17–SNAP29–VAMP8</text>
+      <rect class="box" x="1060" y="56" width="150" height="50" rx="5" style="stroke:var(--known)"/><text class="lbl" x="1135" y="78" text-anchor="middle">⑥ 降解回收</text><text class="en" x="1135" y="95" text-anchor="middle">degrade &amp; recycle</text>
+
+      <line class="k" x1="204"  y1="81" x2="232"  y2="81" marker-end="url(#e1k)"/>
+      <line class="k" x1="414"  y1="81" x2="442"  y2="81" marker-end="url(#e1k)"/>
+      <line class="k" x1="624"  y1="81" x2="652"  y2="81" marker-end="url(#e1k)"/>
+      <line class="k" x1="814"  y1="81" x2="842"  y2="81" marker-end="url(#e1k)"/>
+      <line class="k" x1="1024" y1="81" x2="1052" y2="81" marker-end="url(#e1k)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="218"  y="32">招募核心机器</text><text class="arwen" x="218"  y="44">recruit</text>
+        <text class="arw" x="428"  y="32">标记膜</text><text class="arwen" x="428"  y="44">mark membrane</text>
+        <text class="arw" x="638"  y="32">合拢</text><text class="arwen" x="638"  y="44">close</text>
+        <text class="arw" x="828"  y="32">对接并融合</text><text class="arwen" x="828"  y="44">dock &amp; fuse</text>
+        <text class="arw" x="1038" y="32">水解</text><text class="arwen" x="1038" y="44">hydrolyze</text>
+      </g>
+
+      <path class="k" d="M110 110 C110 140 100 148 90 168" marker-end="url(#e1k)"/>
+      <rect class="box" x="40" y="174" width="480" height="68" rx="5" style="stroke:var(--known)"/>
+      <text class="lbl" x="56" y="198">上游开关：mTORC1 踩刹车，AMPK 踩油门</text>
+      <text class="en"  x="56" y="216">mTORC1 inhibits ULK1 · AMPK activates ULK1 — 直接磷酸化</text>
+      <text class="en"  x="56" y="234" style="fill:var(--known)">见图 3：同一组开关还管着溶酶体的"扩建"</text>
+
+      <path class="p" d="M935 110 C935 140 925 148 915 168" marker-end="url(#e1p)"/>
+      <rect class="box" x="560" y="174" width="500" height="68" rx="5" style="stroke:var(--patho)"/>
+      <text class="lbl" x="576" y="198">陷阱：融合或酸化失败，自噬体反而更多</text>
+      <text class="en"  x="576" y="216">a blocked exit raises autophagosome counts — the same direction as activation</text>
+      <text class="en"  x="576" y="234" style="fill:var(--patho)">所以"LC3 点变多"这一条读数本身没有方向性</text>
+    </svg>
+  </div>
+  <figcaption><b>图 1 · 六步里，只有第 ⑥ 步真正减少了底物。</b>前五步都只是把货物运到门口。LC3 在第 ③ 步被<span class="t">脂质化<em>lipidate</em></span>连到膜上的<span class="t">磷脂酰乙醇胺<em>PE</em></span>，形成膜结合的 LC3-II，<sup><a href="#r4">4</a></sup>这既是最常用的读数，也是最常被误读的读数。</figcaption>
+</figure>
+
+<!-- ============ 通量 ============ -->
+<section>
+<span class="step-no">核心陷阱 / FLUX</span>
+<h2>自噬通量：必须用"堵住出口"的对照才能读出方向 <span class="tag tag-k">方法学共识</span></h2>
+<p><span class="t">自噬通量<em>autophagic flux</em></span>指的是单位时间内<b>经这条通路被清除掉的量</b>，而不是任一时刻自噬体的数量。要测方向，标准做法是比较"有／无溶酶体抑制剂"（如 <span class="t"><em>bafilomycin A1</em></span>、氯喹）两种条件下的差值。<sup><a href="#r11">11</a></sup></p>
+
+<div class="m22">
+  <div></div>
+  <div class="ch">基线 LC3-II 升高</div>
+  <div class="ch">基线 LC3-II 基本不变</div>
+
+  <div class="rh">加抑制剂后<br>继续明显升高</div>
+  <div class="cell target"><b>通量增强</b><span>flux ↑ — 形成变快，而且确实在被降解</span></div>
+  <div class="cell"><b>通量正常或略升</b><span>形成与降解同步，基线被"扫得快"掩盖了</span></div>
+
+  <div class="rh">加抑制剂后<br>不再进一步升高</div>
+  <div class="cell"><b>降解受阻</b><span>出口已经堵住，抑制剂没有额外可堵的；最常被误读成"自噬增强"</span></div>
+  <div class="cell"><b>通量低或被完全阻断</b><span>需要结合底物（如 p62）水平一起判断</span></div>
+</div>
+
+<p style="font-size:13px;color:var(--ink-soft);margin-top:14px">左下角那一格是本页最重要的一格：<b>它和左上角在"LC3-II 升高"这一条读数上完全一样，方向却相反</b>。任何只报告"LC3-II 增加，说明自噬被激活"的叙述，都缺了这一步对照。</p>
+
+<div class="cards">
+  <div class="card known"><h3>配套读数：p62/SQSTM1</h3><p>p62 本身会随货物一起被降解，所以通量通畅时 p62 下降、受阻时上升。<sup><a href="#r5">5</a></sup>但它的转录也会被应激调节，所以只能作佐证，不能单独下结论。</p></div>
+  <div class="card known"><h3>更干净的做法：串联荧光探针</h3><p>mRFP-GFP-LC3 这类探针利用 GFP 在酸性环境中淬灭的特性，让"已酸化"与"未酸化"的囊泡在颜色上直接分开，比单纯计数稳健。</p></div>
+  <div class="card hypo"><span class="neq">自噬体多 ≠ 自噬旺盛</span><p>这是本页唯一必须背下来的一条。</p></div>
+</div>
+</section>
+
+<!-- ============ 选择性自噬 ============ -->
+<section>
+<span class="step-no">选择性 / SELECTIVE AUTOPHAGY</span>
+<h2>货物怎么被挑出来：泛素 → 受体 → LC3 <span class="tag tag-k">已验证</span></h2>
+<p>自噬并不全是"无差别打包"。带有多<span class="t">泛素链<em>polyubiquitin chain</em></span>标记的货物会被<span class="t">自噬受体<em>autophagy receptor</em></span>识别，受体一端有泛素结合域、另一端有 LIR，于是把货物挂到膜上的 LC3-II 上。<sup><a href="#r6">6</a></sup></p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1000 206" role="img" aria-label="货物被多泛素链标记后由自噬受体识别，受体经 LIR 结合膜上的 LC3-II，从而被选择性包裹" style="min-width:740px">
+      <defs>
+        <marker id="e2k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="20"  y="60" width="180" height="56" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="110" y="84" text-anchor="middle">货物</text><text class="en" x="110" y="102" text-anchor="middle">聚集体 · 受损线粒体 · 胞内病原</text>
+      <rect class="box" x="240" y="60" width="180" height="56" rx="5"/><text class="lbl" x="330" y="84" text-anchor="middle">多泛素链标记</text><text class="en" x="330" y="102" text-anchor="middle">polyubiquitin tag</text>
+      <rect class="box" x="460" y="60" width="200" height="56" rx="5" style="stroke:var(--known)"/><text class="lbl" x="560" y="84" text-anchor="middle">自噬受体</text><text class="en" x="560" y="102" text-anchor="middle">p62 · NBR1 · OPTN · NDP52</text>
+      <rect class="box" x="700" y="60" width="260" height="56" rx="5"/><text class="lbl" x="830" y="84" text-anchor="middle">膜上的 LC3-II</text><text class="en" x="830" y="102" text-anchor="middle">LIR–LC3 interaction</text>
+
+      <line class="k" x1="204" y1="88" x2="232" y2="88" marker-end="url(#e2k)"/>
+      <line class="k" x1="424" y1="88" x2="452" y2="88" marker-end="url(#e2k)"/>
+      <line class="k" x1="664" y1="88" x2="692" y2="88" marker-end="url(#e2k)"/>
+      <g text-anchor="middle">
+        <text class="arw" x="218" y="36">打标签</text><text class="arwen" x="218" y="48">ubiquitinate</text>
+        <text class="arw" x="438" y="36">识别标签</text><text class="arwen" x="438" y="48">UBA domain</text>
+        <text class="arw" x="678" y="36">经 LIR 挂上</text><text class="arwen" x="678" y="48">tether</text>
+      </g>
+
+      <text class="en" x="20" y="150" text-anchor="start">受体一端认泛素、另一端认 LC3——它就是"把垃圾挂到膜上"的分子接口。</text>
+      <text class="en" x="20" y="168" text-anchor="start">a receptor is an adaptor with two hands: one for the tag, one for the membrane</text>
+      <text class="en" x="20" y="190" text-anchor="start" style="fill:var(--hypo)">本库的 pTau181 专题把 LIR 直接装进人工分子里，走的就是这个接口。</text>
+    </svg>
+  </div>
+  <figcaption><b>图 2 · 这张图解释了"人工自噬标签"类方案的分子依据。</b>把 LIR 接到一个识别模块上，相当于人工伪造一张"请清除我"的票据——见本库的 <a href="../tau-ptau181-clearance/index.html">pTau181 多功能肽专题</a>。该思路的承重假设也正在这里：<b>挂上 LC3 不等于完成清除</b>，还要通过第 ⑤⑥ 步。</figcaption>
+</figure>
+
+<div class="note">
+<strong>另外两种自噬别混淆：</strong><span class="t">微自噬<em>microautophagy</em></span>由溶酶体／内体膜直接内陷吞入货物；<span class="t">分子伴侣介导自噬<em>chaperone-mediated autophagy, CMA</em></span>则识别底物上的 KFERQ 样基序，由 HSC70 带到溶酶体膜上，经 <span class="t"><em>LAMP2A</em></span> 逐条跨膜转运——<b>不形成囊泡，也不产生 LC3 点</b>。<sup><a href="#r12">12</a></sup>用 LC3 读数去测 CMA，是另一个常见错配。
+</div>
+</section>
+
+<!-- ============ 调控 ============ -->
+<section>
+<span class="step-no">调控 / TWO ARMS</span>
+<h2>同一组传感器，管着"立刻开工"和"扩建产能" <span class="tag tag-k">已验证</span></h2>
+<p>mTORC1 与 AMPK 直接磷酸化 ULK1，分别抑制和激活自噬的启动。<sup><a href="#r7">7</a></sup>同一个 mTORC1 还控制转录因子 <span class="t"><em>TFEB</em></span> 的去向：被磷酸化时 TFEB 留在胞质，去磷酸化后入核，开启一整套溶酶体与自噬基因的转录程序。<sup><a href="#r8">8</a></sup><sup><a href="#r9">9</a></sup></p>
+
+<figure>
+  <div class="scroll">
+    <svg viewBox="0 0 1000 240" role="img" aria-label="营养充足时 mTORC1 活跃并抑制 ULK1 与 TFEB 入核；能量不足时 AMPK 活跃并激活 ULK1" style="min-width:740px">
+      <defs>
+        <marker id="e3k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk-k" d="M0 0 L10 5 L0 10 z"/></marker>
+      </defs>
+      <rect class="box" x="20"  y="36"  width="210" height="54" rx="5"/><text class="lbl" x="125" y="60" text-anchor="middle">营养充足 / 生长信号</text><text class="en" x="125" y="78" text-anchor="middle">nutrient replete</text>
+      <rect class="box" x="20"  y="156" width="210" height="54" rx="5"/><text class="lbl" x="125" y="180" text-anchor="middle">能量不足 / 饥饿</text><text class="en" x="125" y="198" text-anchor="middle">energy stress</text>
+      <rect class="box" x="290" y="36"  width="170" height="54" rx="5" style="stroke:var(--patho)"/><text class="lbl" x="375" y="60" text-anchor="middle">mTORC1 活跃</text><text class="en" x="375" y="78" text-anchor="middle">brake on</text>
+      <rect class="box" x="290" y="156" width="170" height="54" rx="5" style="stroke:var(--known)"/><text class="lbl" x="375" y="180" text-anchor="middle">AMPK 活跃</text><text class="en" x="375" y="198" text-anchor="middle">throttle on</text>
+
+      <line class="k" x1="234" y1="63"  x2="282" y2="63"  marker-end="url(#e3k)"/>
+      <line class="k" x1="234" y1="183" x2="282" y2="183" marker-end="url(#e3k)"/>
+
+      <rect class="box" x="560" y="20"  width="400" height="54" rx="5"/><text class="lbl" x="576" y="44">TFEB 入核 → 转录溶酶体与自噬基因</text><text class="en" x="576" y="62">lysosomal biogenesis program</text>
+      <rect class="box" x="560" y="108" width="400" height="54" rx="5"/><text class="lbl" x="576" y="132">ULK1 复合物 → 启动自噬</text><text class="en" x="576" y="150">initiation of autophagosome formation</text>
+
+      <path class="p" d="M464 56 C500 50 520 47 548 47"/><line x1="552" y1="37" x2="552" y2="57" stroke="var(--patho)" stroke-width="2.4"/>
+      <path class="p" d="M464 72 C500 96 520 126 548 135"/><line x1="552" y1="125" x2="552" y2="145" stroke="var(--patho)" stroke-width="2.4"/>
+      <path class="k" d="M464 176 C500 170 520 152 548 145" marker-end="url(#e3k)"/>
+
+      <text class="en" x="500" y="24" text-anchor="middle" style="fill:var(--patho)">⊣ 抑制</text>
+      <text class="en" x="492" y="196" text-anchor="middle" style="fill:var(--known)">→ 激活</text>
+
+      <rect class="box" x="560" y="180" width="400" height="50" rx="5" style="stroke:var(--rule)"/>
+      <text class="en" x="576" y="202">一条臂管"立刻开工"，另一条臂管"扩建产能"。</text>
+      <text class="en" x="576" y="220">只增强启动而不扩建溶酶体，容易把货物堵在门口。</text>
+    </svg>
+  </div>
+  <figcaption><b>图 3 · 为什么"激活自噬"这句话需要再问一句"哪一臂"。</b>只推 ULK1 这一臂，会在溶酶体能力不变的前提下把更多货物送到同一个出口。把 TFEB 这一臂写进方案，等于同时考虑了产能。<sup><a href="#r8">8</a></sup></figcaption>
+</figure>
+</section>
+
+<!-- ============ 疾病 ============ -->
+<section>
+<span class="step-no">疾病接口 / WHERE IT BREAKS</span>
+<h2>通路在神经退行里断在哪一段</h2>
+<div class="tablewrap">
+<table>
+<thead><tr><th>断点</th><th>代表性情形</th><th>可观察到的后果</th></tr></thead>
+<tbody>
+<tr><td>溶酶体酶活不足</td><td><span class="t"><em>GBA1</em></span>（葡萄糖脑苷脂酶）变异是帕金森病最常见的遗传风险因素之一<sup><a href="#r13">13</a></sup></td><td>底物堆积；与 α-syn 之间可形成双向恶性循环<sup><a href="#r14">14</a></sup></td></tr>
+<tr><td>融合与运输</td><td>轴突运输距离长，自噬体需沿微管回到胞体才能充分成熟</td><td>轴突末端自噬体堆积，形成"看起来自噬很活跃"的假象</td></tr>
+<tr><td>酸化能力</td><td>v-ATP 酶功能或溶酶体 pH 调节异常</td><td>水解酶活性下降；探针显示囊泡未酸化</td></tr>
+<tr><td>基础自噬缺失</td><td>神经细胞条件性敲除 Atg5 / Atg7<sup><a href="#r2">2</a></sup><sup><a href="#r3">3</a></sup></td><td>即使没有外源致病蛋白也出现包涵体与退行</td></tr>
+</tbody>
+</table>
+</div>
+<div class="note" style="border-left-color:var(--hypo)">
+<strong>读法：</strong>这四行里有三行都会把<b>自噬体数量推高</b>，但原因是"堵"而不是"快"。再次回到本页的核心：方向性只能由通量实验给出。
+</div>
+</section>
+
+<!-- ============ 术语表 ============ -->
+<section>
+<span class="step-no">对照表 / GLOSSARY</span>
+<h2>术语中英对照</h2>
+
+<h3 style="margin-top:22px">名词 Nouns</h3>
+<dl class="gloss">
+<div><dt>宏自噬<span>macroautophagy</span></dt><dd>形成双膜囊泡包裹货物并送往溶酶体的主要形式；本页默认讨论它。</dd></div>
+<div><dt>微自噬<span>microautophagy</span></dt><dd>溶酶体／内体膜直接内陷吞入货物。</dd></div>
+<div><dt>分子伴侣介导自噬<span>chaperone-mediated autophagy, CMA</span></dt><dd>经 HSC70 识别 KFERQ 样基序、由 LAMP2A 逐条转运；不形成囊泡。<sup><a href="#r12">12</a></sup></dd></div>
+<div><dt>自噬体<span>autophagosome</span></dt><dd>包裹货物的双膜囊泡。</dd></div>
+<div><dt>自噬溶酶体<span>autolysosome</span></dt><dd>自噬体与溶酶体融合后的酸性降解区室。</dd></div>
+<div><dt>自噬通量<span>autophagic flux</span></dt><dd>单位时间经该通路清除掉的量；是速率，不是数量。</dd></div>
+<div><dt>ULK1 复合物<span>ULK1 complex</span></dt><dd>自噬启动的核心激酶复合物。</dd></div>
+<div><dt>PI3KC3 / Beclin-1<span>class III PI3K complex</span></dt><dd>生成 PI3P、标记成核位点的复合物。</dd></div>
+<div><dt>LC3-I / LC3-II<span>LC3 forms</span></dt><dd>LC3-I 游离，与 PE 偶联后成为膜结合的 LC3-II。<sup><a href="#r4">4</a></sup></dd></div>
+<div><dt>LIR<span>LC3-interacting region</span></dt><dd>与 LC3 结合的短序列，核心常为 (W/F/Y)-X-X-(I/L/V)。</dd></div>
+<div><dt>p62 / SQSTM1<span>sequestosome 1</span></dt><dd>经典自噬受体，同时被一起降解，故可作通量佐证。<sup><a href="#r5">5</a></sup></dd></div>
+<div><dt>SNARE<span>STX17 · SNAP29 · VAMP8</span></dt><dd>介导自噬体与溶酶体融合的蛋白组合。<sup><a href="#r10">10</a></sup></dd></div>
+<div><dt>v-ATP 酶<span>vacuolar ATPase</span></dt><dd>把质子泵入溶酶体腔、维持酸性环境的泵。</dd></div>
+<div><dt>组织蛋白酶<span>cathepsin</span></dt><dd>溶酶体内的酸性蛋白酶。</dd></div>
+<div><dt>TFEB<span>transcription factor EB</span></dt><dd>调控溶酶体生物发生与自噬基因的转录因子。<sup><a href="#r8">8</a></sup><sup><a href="#r9">9</a></sup></dd></div>
+<div><dt>mTORC1<span>mechanistic target of rapamycin complex 1</span></dt><dd>营养充足时抑制自噬启动的激酶复合物。</dd></div>
+<div><dt>AMPK<span>AMP-activated protein kinase</span></dt><dd>能量不足时激活自噬启动的激酶。</dd></div>
+<div><dt>巴佛洛霉素 A1<span>bafilomycin A1</span></dt><dd>抑制 v-ATP 酶与融合，常用于通量实验的"堵出口"对照。</dd></div>
+<div><dt>GBA1<span>glucocerebrosidase</span></dt><dd>溶酶体酶，其变异是帕金森病常见遗传风险因素。<sup><a href="#r13">13</a></sup></dd></div>
+</dl>
+
+<h3 style="margin-top:30px">动词 Verbs</h3>
+<dl class="gloss">
+<div><dt>诱导<span>induce</span></dt><dd>启动自噬程序。</dd></div>
+<div><dt>成核<span>nucleate</span></dt><dd>在膜上建立起始位点。</dd></div>
+<div><dt>延伸<span>elongate</span></dt><dd>膜向外扩展包住货物。</dd></div>
+<div><dt>封闭<span>seal / close</span></dt><dd>双膜合拢形成完整囊泡。</dd></div>
+<div><dt>脂质化<span>lipidate</span></dt><dd>把 PE 共价连到 LC3 上，形成膜结合型。</dd></div>
+<div><dt>泛素化<span>ubiquitinate</span></dt><dd>加上泛素标签，使货物可被受体识别。</dd></div>
+<div><dt>系链 / 挂载<span>tether</span></dt><dd>通过受体把货物连到膜上的 LC3。</dd></div>
+<div><dt>对接与融合<span>dock &amp; fuse</span></dt><dd>两个膜性区室靠近并合并。</dd></div>
+<div><dt>酸化<span>acidify</span></dt><dd>腔内 pH 下降，是水解酶工作的前提。</dd></div>
+<div><dt>水解<span>hydrolyze</span></dt><dd>以水参与断开共价键；真正的降解步骤。</dd></div>
+<div><dt>阻断<span>block</span></dt><dd>堵住出口，用于把通量变成可读的差值。</dd></div>
+<div><dt>回收<span>recycle</span></dt><dd>把降解产物送回细胞再利用。</dd></div>
+</dl>
+</section>
+
+<!-- ============ 结论 ============ -->
+<section>
+<span class="step-no">结论 / BOTTOM LINE</span>
+<h2>核心结论</h2>
+<div class="cards">
+  <div class="card known"><h3>① 只有最后一步减少底物</h3><p>前五步都只是运输；叙述时不要把运输写成清除。</p></div>
+  <div class="card known"><h3>② 数量读数没有方向性</h3><p>必须配"堵出口"的对照才能分清是快还是堵。</p></div>
+  <div class="card known"><h3>③ 选择性靠受体的两只手</h3><p>一只认泛素，一只认 LC3；人工自噬标签的全部设计空间就在这里。</p></div>
+  <div class="card hypo"><h3>④ 增强自噬要问"哪一臂"</h3><p>只加启动不扩产能，可能把货物堆在门口。</p></div>
+</div>
+
+<ol class="refs">
+<li id="r1">Mizushima N、Komatsu M，2011，<i>Cell</i>：自噬与细胞及组织的更新 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Autophagy+renovation+of+cells+and+tissues">PubMed 检索</a></li>
+<li id="r2">Hara T 等，2006，<i>Nature</i>：抑制神经细胞的基础自噬可在小鼠中引起神经退行 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Suppression+of+basal+autophagy+in+neural+cells+causes+neurodegenerative+disease+in+mice">PubMed 检索</a></li>
+<li id="r3">Komatsu M 等，2006，<i>Nature</i>：中枢神经系统自噬缺失导致小鼠神经退行 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Loss+of+autophagy+in+the+central+nervous+system+causes+neurodegeneration+in+mice">PubMed 检索</a></li>
+<li id="r4">Kabeya Y 等，2000，<i>EMBO Journal</i>：LC3 加工后定位于自噬体膜 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=LC3+a+mammalian+homologue+of+yeast+Apg8p+is+localized+in+autophagosome+membranes+after+processing">PubMed 检索</a></li>
+<li id="r5">Bjørkøy G 等，2005，<i>Journal of Cell Biology</i>：p62/SQSTM1 形成的蛋白聚集体经自噬降解 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=p62+SQSTM1+forms+protein+aggregates+degraded+by+autophagy">PubMed 检索</a></li>
+<li id="r6">Pankiv S 等，2007，<i>JBC</i>：p62/SQSTM1 直接结合 LC3 以促进泛素化聚集体的降解 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=p62+SQSTM1+binds+directly+to+Atg8+LC3+to+facilitate+degradation+of+ubiquitinated+protein+aggregates">PubMed 检索</a></li>
+<li id="r7">Kim J 等，2011，<i>Nature Cell Biology</i>：AMPK 与 mTOR 经直接磷酸化 ULK1 调控自噬 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=AMPK+and+mTOR+regulate+autophagy+through+direct+phosphorylation+of+Ulk1">PubMed 检索</a></li>
+<li id="r8">Settembre C 等，2011，<i>Science</i>：TFEB 把自噬与溶酶体生物发生联系起来 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=TFEB+links+autophagy+to+lysosomal+biogenesis">PubMed 检索</a></li>
+<li id="r9">Sardiello M 等，2009，<i>Science</i>：调控溶酶体生物发生与功能的基因网络 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=A+gene+network+regulating+lysosomal+biogenesis+and+function">PubMed 检索</a></li>
+<li id="r10">Itakura E 等，2012，<i>Cell</i>：syntaxin 17 定位于自噬体并介导其与内体／溶酶体的融合 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=The+hairpin-type+tail-anchored+SNARE+syntaxin+17+targets+to+autophagosomes">PubMed 检索</a></li>
+<li id="r11">Klionsky DJ 等：自噬监测实验的使用与解读指南（多版更新，含通量判读标准）— <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Guidelines+for+the+use+and+interpretation+of+assays+for+monitoring+autophagy">PubMed 检索</a></li>
+<li id="r12">Cuervo AM、Dice JF，1996，<i>Science</i>：溶酶体选择性摄取并降解蛋白的受体 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=A+receptor+for+the+selective+uptake+and+degradation+of+proteins+by+lysosomes">PubMed 检索</a></li>
+<li id="r13">Sidransky E 等，2009，<i>New England Journal of Medicine</i>：帕金森病中葡萄糖脑苷脂酶突变的多中心分析 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Multicenter+analysis+of+glucocerebrosidase+mutations+in+Parkinson%27s+disease">PubMed 检索</a></li>
+<li id="r14">Mazzulli JR 等，2011，<i>Cell</i>：葡萄糖脑苷脂酶与 α-syn 形成双向致病环路 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Gaucher+disease+glucocerebrosidase+and+alpha-synuclein+form+a+bidirectional+pathogenic+loop">PubMed 检索</a></li>
+<li id="r15">Nixon RA，2013，<i>Nature Medicine</i>：自噬在神经退行性疾病中的作用 — <a href="https://pubmed.ncbi.nlm.nih.gov/?term=The+role+of+autophagy+in+neurodegenerative+disease+Nixon">PubMed 检索</a></li>
+</ol>
+</section>
+
+<footer>
+本页为机制讲解与读图训练，用于把"已验证／有争议／会失效"三层分开，不构成临床建议或个体化医学意见。参考条目以标题给出并链接到 PubMed 检索，便于核对原文。
+</footer>
+
+
+</div>
+
+</body>
+</html>
